@@ -45,6 +45,8 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 		} else if(!powerCut && fletch == 0) {
 			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx, bSetting), new Banking(ctx)));
 		}
+		
+		
 	}
 	
 	@Override
