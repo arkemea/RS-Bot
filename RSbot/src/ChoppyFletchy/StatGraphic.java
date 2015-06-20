@@ -74,7 +74,6 @@ public class StatGraphic extends Task<ClientContext> {
 			g.drawImage(ImageIO.read(getClass().getResource("/art/fletchingIcon.png")),170,380,null);
 			g.drawImage(ImageIO.read(getClass().getResource("/art/woodcuttingIcon.png")), 320, 380, null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		g.setFont(new Font("arial Regular", 1, 12));
