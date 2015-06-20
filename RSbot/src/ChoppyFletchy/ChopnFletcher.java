@@ -25,15 +25,26 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 	private long startTime				= System.currentTimeMillis();
 	private ArrayList<Task> taskList 	= new ArrayList<Task>();
 	public StatGraphic mGraphic			= new StatGraphic(ctx, startTime);
-	private Tile anchor 				= ctx.players.local().tile();
-	
 	static String status				="Starting bot";
 	
 	@Override
 	public void start() {
 		
-		BotSetting bSetting = new BotSetting(anchor, new Bank(ctx), 1511, 1, false );
-		boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx, bSetting), new Fletch(ctx, bSetting)));
+		Tile anchor 		= ctx.players.local().tile();
+		int logToCut 		= LOG.WILLOW.getLogId();
+		int treeToChop[]	= TREE.WILLOW.getTreeIds();
+		int fletch			= 0;
+		boolean powerCut 	= false;
+		
+		BotSetting bSetting = new BotSetting(anchor, logToCut, treeToChop, fletch, powerCut);
+		
+		if(powerCut && fletch == 0) {
+			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx, bSetting), new Drop(ctx, bSetting)));
+		} else if(powerCut && fletch != 0) {
+			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx, bSetting), new Fletch(ctx, bSetting), new Drop(ctx,bSetting)));
+		} else if(!powerCut && fletch == 0) {
+			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx, bSetting), new Banking(ctx)));
+		}
 	}
 	
 	@Override

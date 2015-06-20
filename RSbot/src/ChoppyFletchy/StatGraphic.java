@@ -115,7 +115,7 @@ public class StatGraphic extends Task<ClientContext> {
 		
 		String fletchString1 = "cut the wood";
 		String fletchString2 = "attach feathers to";
-		String woodcuttingString = "You get some logs";
+		String woodcuttingString = "You get some";
 		
 		if(data.contains(fletchString1) || data.contains(fletchString2)) {
 			itemFletched++;

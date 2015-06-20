@@ -35,18 +35,18 @@ public class Fletch extends Task<ClientContext> {
 	@Override
 	public void execute() {
 		
-		PathFinder mPathFinder = new PathFinder(ctx);
-		
-		mPathFinder.moveTo(bSetting.getAnchor());
-		
-		
-		if(ctx.inventory.select().id(logId).poll().valid()) {
-			cutArrowShaft();
+		if(bSetting.getFletch() == 1) {
+			if(ctx.inventory.select().id(LOG.NORMAL.getLogId()).poll().valid()) {
+				cutArrowShaft();
+			}
+			
+			if(ctx.inventory.select().id(featherId).poll().valid() && ctx.inventory.select().id(arrowShaftId).poll().valid()) {
+				makeHeadlessArrow();
+			}
+		} else if(bSetting.getFletch() == 2) {
+			fletchShortBow();
 		}
 		
-		if(ctx.inventory.select().id(featherId).poll().valid() && ctx.inventory.select().id(arrowShaftId).poll().valid()) {
-			makeHeadlessArrow();
-		}
 	}
 	
 	public void cutArrowShaft() {
@@ -115,6 +115,12 @@ public class Fletch extends Task<ClientContext> {
 				}		
 			}
 		}
+	}
+	
+	public void fletchShortBow() {
+		
+		
+		
 	}
 	
 	

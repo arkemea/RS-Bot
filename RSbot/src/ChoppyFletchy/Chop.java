@@ -27,16 +27,14 @@ public class Chop extends Task<ClientContext>{
 
 	@Override
 	public void execute() {
-		
-		while(true) {
-			
+
 			if(!(ctx.players.local().animation() == -1)) {
 				ChopnFletcher.status = "Chopping";
 			} else if(ctx.players.local().inMotion()) {
 				ChopnFletcher.status = "Moving to tree";
 			}
 			
-			final GameObject tree 	= ctx.objects.select().id(treeIds).nearest().poll();
+			final GameObject tree 	= ctx.objects.select().id(bSetting.getTreeToChop()).nearest().poll();
 			PathFinder mPF			= new PathFinder(ctx);
 			
 			if(mPF.distanceBetween(bSetting.getAnchor(), tree.tile()) > 100) {
@@ -60,11 +58,7 @@ public class Chop extends Task<ClientContext>{
 				}
 				ctx.camera.pitch(true);
 			} 
-			
-			if(ctx.inventory.select().count() == 28 || !ctx.objects.select().id(treeIds).nearest().poll().valid()) {
-				break;
-			} 
-		}
+		
 	}
 
 }

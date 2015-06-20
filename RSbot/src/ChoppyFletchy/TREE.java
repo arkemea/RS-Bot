@@ -1,9 +1,10 @@
 package ChoppyFletchy;
 
 public enum TREE {
-	NORMAL(1245,2245);
-	
-	
+	NORMAL(1276,1278),
+	OAK(11756),
+	WILLOW(11755,11759,11763,11761),
+	MAPLE(11762);
 	
 	private int treeIds[];
 	
@@ -11,7 +12,7 @@ public enum TREE {
 		this.treeIds = treeIds;
 	}
 	
-	public int[] getLogIds() {
+	public int[] getTreeIds() {
 		return treeIds;
 	}
 	

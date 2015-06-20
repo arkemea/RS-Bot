@@ -6,9 +6,8 @@ import org.powerbot.script.rt4.ClientContext;
 public class BotSetting {
 
 	private Tile anchor = new Tile(0,0);
-
-	private Bank bankToBank;	
 	
+	private int treeToChop[];
 	private int logToCut = 1511;
 	private int fletch = 0;
 	//0 dont fletch, 1 arrowshafts, 2 shortbow, 3 longbow
@@ -19,21 +18,18 @@ public class BotSetting {
 			
 	}
 	
-	public BotSetting(Tile anchor, Bank bankToBank, int logToCut, int fletch, boolean powerCutting) {
+	public BotSetting(Tile anchor, int logToCut, int treeToChop[], int fletch, boolean powerCutting) {
 		this.anchor 		= anchor;
-		this.bankToBank 	= bankToBank;
 		this.logToCut 		= logToCut;
 		this.fletch 		= fletch;
 		this.powerCutting 	= powerCutting;
+		this.treeToChop		= treeToChop;
 	}
 	
 	public Tile getAnchor() {
 		return anchor;
 	}
 	
-	public Bank getBankToBank() {
-		return bankToBank;
-	}
 	
 	public int getLogToCut() {
 		return logToCut;
@@ -47,12 +43,12 @@ public class BotSetting {
 		return powerCutting;
 	}
 	
-	public void setAnchor(Tile anchor) {
-		this.anchor = anchor;
+	public int[] getTreeToChop() {
+		return treeToChop;
 	}
 	
-	public void setBankToBank(Bank bankToBank) {
-		this.bankToBank = bankToBank;
+	public void setAnchor(Tile anchor) {
+		this.anchor = anchor;
 	}
 	
 	public void setLogToCut(int logToCut) {
@@ -65,6 +61,10 @@ public class BotSetting {
 	
 	public void setPowerCutting(boolean powerCutting) {
 		this.powerCutting = powerCutting;
+	}
+	
+	public void setTreeToChop(int[] treeToChop) {
+		this.treeToChop = treeToChop;
 	}
 	
 }

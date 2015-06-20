@@ -45,7 +45,7 @@ public class PathFinder extends Task<ClientContext> {
 	public void moveTo(Tile targetTile) {
 	
 		while(true) {
-			if(		this.playerDistanceTo(targetTile) < 40 )
+			if(this.playerDistanceTo(targetTile) < 20 )
 			{break;}
 			else {
 				ctx.movement.step(targetTile);
@@ -56,5 +56,18 @@ public class PathFinder extends Task<ClientContext> {
 			}
 		}
 		
+	}
+	public void moveToExact(Tile targetTile) {
+		while(true) {
+			if(this.playerDistanceTo(targetTile) < 5 )
+			{break;}
+			else {
+				ctx.movement.step(targetTile);
+				
+				try {
+					Thread.sleep(1500);
+				} catch (InterruptedException e) {}	
+			}
+		}
 	}
 }

@@ -24,6 +24,10 @@ public class Drop extends Task<ClientContext> {
 	@Override
 	public void execute() {
 		
+		if(bSetting.powerCutting) {
+			dropAllLogs();
+		}
+		
 	}
 	
 	public void dropLogs() {
