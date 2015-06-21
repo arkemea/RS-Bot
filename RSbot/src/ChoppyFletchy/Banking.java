@@ -81,12 +81,15 @@ public class Banking extends Task<ClientContext> {
 		
 		GameObject bankBooth = ctx.objects.select().id(getClosestBank().bankBoothId).nearest().limit(4).poll();;
 		
+		ctx.movement.step(bankBooth);
+		
 		System.out.println(bankBooth.valid());
 		
 		try {
 			Thread.sleep(3000);
-		} catch (InterruptedException e) {}	
+		} catch (InterruptedException e) {}
 		
+		ctx.camera.turnTo(bankBooth);
 		bankBooth.click();
 		
 		if(ctx.bank.opened()) {
@@ -103,6 +106,8 @@ public class Banking extends Task<ClientContext> {
 	public void bankAllBows() {
 		
 		GameObject bankBooth = ctx.objects.select().id(getClosestBank().bankBoothId).nearest().limit(4).poll();;
+		
+		ctx.movement.step(bankBooth);
 		
 		System.out.println(bankBooth.valid());
 		

@@ -6,6 +6,9 @@ import java.awt.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+
 import org.powerbot.script.MessageEvent;
 import org.powerbot.script.MessageListener;
 import org.powerbot.script.PaintListener;
@@ -25,17 +28,30 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 	private long startTime				= System.currentTimeMillis();
 	private ArrayList<Task> taskList 	= new ArrayList<Task>();
 	public StatGraphic mGraphic			= new StatGraphic(ctx, startTime);
-	static String status				="Starting bot";
+	static String status				=	"Starting bot";
+	public static boolean isDone		= false;
+	
+	public JFrame frame;
+	
+	public Tile anchor 					= ctx.players.local().tile();
+	public int logToCut 				= LOG.MAPLE.getLogId();
+	public int treeToChop[]				= TREE.MAPLE.getTreeIds();
+	public int fletch					= 2;
+	public boolean powerCut 			= false;
 	
 	@Override
 	public void start() {
 		
-		Tile anchor 		= ctx.players.local().tile();
-		int logToCut 		= LOG.MAPLE.getLogId();
-		int treeToChop[]	= TREE.MAPLE.getTreeIds();
-		int fletch			= 2;
-		boolean powerCut 	= false;
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
 		
+		while(!isDone)  {
+			System.out.println(isDone);
+		}
+			
 		BotSetting bSetting = new BotSetting(anchor, logToCut, treeToChop, fletch, powerCut);
 		
 		if(powerCut && fletch == 0) {
@@ -75,6 +91,22 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 		mGraphic.inputData(arg0.text());
 		
 	}
+	
+	private void createAndShowGUI() {
+	       //Create and set up the window.
+	       frame = new JFrame("ComboBoxDemo");
+	       frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+	       //Create and set up the content pane.
+	       JComponent newContentPane = new SettingGUI();
+	       newContentPane.setOpaque(true); //content panes must be opaque
+	       frame.setContentPane(newContentPane);
+
+	       //Display the window.
+	       frame.pack();
+	       frame.setVisible(true);
+	   }
+	
 }
 
 
