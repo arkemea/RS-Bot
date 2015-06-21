@@ -2,8 +2,8 @@ package ChoppyFletchy;
 
 
 
-import java.awt.*;        // Using AWT container and component classes
-import java.awt.event.*;  // Using AWT event classes and listener interfaces
+import java.awt.*;      
+import java.awt.event.*; 
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
  
-// An AWT program inherits from the top-level container java.awt.Frame
 public class SettingGUI extends JPanel implements ActionListener {
    private JComboBox bankChoice;
    private JComboBox treeChoice;
@@ -23,9 +22,6 @@ public class SettingGUI extends JPanel implements ActionListener {
    
    private Button isDoneButton;
    
-   
-   
-   /** Constructor to setup GUI components and event handling */
    public SettingGUI () {
 	   super();
 	   this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -56,10 +52,7 @@ public class SettingGUI extends JPanel implements ActionListener {
       add(powercuttingChoice);
       add(isDoneButton);
 
-
- 
-   }
- 
+   } 
 
    @Override
    public void actionPerformed(ActionEvent evt) {
