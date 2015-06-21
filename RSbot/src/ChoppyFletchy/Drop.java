@@ -18,14 +18,20 @@ public class Drop extends Task<ClientContext> {
 
 	@Override
 	public boolean activate() {
-		return ctx.inventory.count() == 28;
+		return 		ctx.inventory.count() == 28
+				|| 	ctx.inventory.count() == 0;
 	}
 
 	@Override
 	public void execute() {
 		
-		if(bSetting.powerCutting) {
+		if(bSetting.powerCutting && bSetting.getFletch() != 0) {
+			dropBows();
+			dropWrongLogs();
+		} else if(bSetting.powerCutting) {
 			dropAllLogs();
+		} else if(!bSetting.powerCutting) {
+			dropWrongLogs();
 		}
 		
 	}
@@ -72,7 +78,7 @@ public class Drop extends Task<ClientContext> {
 	public void dropBows() {
 		for(Item i: ctx.inventory.select()) {
 			for(BOW l: BOW.values()) {
-				if(i.id() == l.getBowId() && l.getBowId() != bSetting.getLogToCut()) {
+				if(i.id() == l.getBowId()) {
 					i.interact("Drop");
 				}
 			}

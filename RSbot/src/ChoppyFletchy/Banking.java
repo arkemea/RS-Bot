@@ -11,17 +11,25 @@ public class Banking extends Task<ClientContext> {
 	private BotSetting bSetting;
 	
 	public enum BANK {
-		DEFAULT(new Tile(0,0)),
-		DRAYNOR(new Tile(3093,3243));
+		DEFAULT(new Tile(0,0), 0),
+		DRAYNOR(new Tile(3093,3243), 11744),
+		VARROCKEAST(new Tile(3253, 3421), 0),
+		SEERSVILLAGE(new Tile(2725, 3491), 25808);
 		
 		private Tile bankTile;
+		private int bankBoothId;
 		
-		BANK(Tile bankTile) {
-			this.bankTile = bankTile;
+		BANK(Tile bankTile, int bankBoothId) {
+			this.bankTile 		= bankTile;
+			this.bankBoothId 	= bankBoothId;
 		}
 		
 		public Tile getBankTile() {
 			return bankTile;
+		}
+		
+		public int getBankBoothId() {
+			return bankBoothId;
 		}
 		
 	}
@@ -43,7 +51,11 @@ public class Banking extends Task<ClientContext> {
 		startingTile = ctx.players.local().tile();
 		PathFinder mPF = new PathFinder(ctx);
 		
-		mPF.moveTo(getClosestBank().getBankTile());
+		if(mPF.playerDistanceTo(getClosestBank().getBankTile()) > 5) {
+			
+			mPF.moveTo(getClosestBank().getBankTile());
+		}
+		
 		bankAllLogs();
 		bankAllBows();
 		
@@ -67,7 +79,7 @@ public class Banking extends Task<ClientContext> {
 	
 	public void bankAllLogs() {
 		
-		GameObject bankBooth = ctx.objects.select().id(11744).nearest().limit(4).poll();;
+		GameObject bankBooth = ctx.objects.select().id(getClosestBank().bankBoothId).nearest().limit(4).poll();;
 		
 		System.out.println(bankBooth.valid());
 		
@@ -90,7 +102,7 @@ public class Banking extends Task<ClientContext> {
 	
 	public void bankAllBows() {
 		
-		GameObject bankBooth = ctx.objects.select().id(11744).nearest().limit(4).poll();;
+		GameObject bankBooth = ctx.objects.select().id(getClosestBank().bankBoothId).nearest().limit(4).poll();;
 		
 		System.out.println(bankBooth.valid());
 		

@@ -18,3 +18,4 @@ public enum LOG {
     return logId;
   }
 }
+

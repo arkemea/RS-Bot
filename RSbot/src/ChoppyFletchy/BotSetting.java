@@ -14,6 +14,7 @@ public class BotSetting {
 	
 	boolean powerCutting;
 	
+	
 	public BotSetting() {
 			
 	}

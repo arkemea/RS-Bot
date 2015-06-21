@@ -25,6 +25,7 @@ public class Chop extends Task<ClientContext>{
 		return ctx.inventory.select().count() < 28;
 	}
 
+	
 	@Override
 	public void execute() {
 

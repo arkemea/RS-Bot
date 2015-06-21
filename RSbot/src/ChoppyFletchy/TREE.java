@@ -19,5 +19,4 @@ public enum TREE {
 	public int getLogId(int i) {
 		return treeIds[i];
 	}
-	
 }

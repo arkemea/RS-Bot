@@ -195,5 +195,4 @@ public class StatGraphic extends Task<ClientContext> {
 		
 		return (int) percentToNextLevel;
 		}
-
 }

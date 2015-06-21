@@ -21,4 +21,5 @@ public enum BOW {
   public int getBowId() {
     return bowId;
   }
+  
 }

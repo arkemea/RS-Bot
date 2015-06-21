@@ -9,6 +9,7 @@ public abstract class Task<C extends ClientContext> extends ClientAccessor {
         super(ctx);
     }
 
+    
     public abstract boolean activate();
     public abstract void execute();
 }

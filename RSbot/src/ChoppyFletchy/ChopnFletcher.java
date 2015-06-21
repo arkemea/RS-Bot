@@ -31,10 +31,10 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 	public void start() {
 		
 		Tile anchor 		= ctx.players.local().tile();
-		int logToCut 		= LOG.WILLOW.getLogId();
-		int treeToChop[]	= TREE.WILLOW.getTreeIds();
-		int fletch			= 3;
-		boolean powerCut 	= true;
+		int logToCut 		= LOG.MAPLE.getLogId();
+		int treeToChop[]	= TREE.MAPLE.getTreeIds();
+		int fletch			= 2;
+		boolean powerCut 	= false;
 		
 		BotSetting bSetting = new BotSetting(anchor, logToCut, treeToChop, fletch, powerCut);
 		
