@@ -8,6 +8,7 @@ import org.powerbot.script.rt4.GameObject;
 public class Banking extends Task<ClientContext> {
 
 	private Tile startingTile;
+	private BotSetting bSetting;
 	
 	public enum BANK {
 		DEFAULT(new Tile(0,0)),
@@ -25,22 +26,26 @@ public class Banking extends Task<ClientContext> {
 		
 	}
 	
-	public Banking(ClientContext ctx) {
+	public Banking(ClientContext ctx, BotSetting bSetting) {
 		super(ctx);
+		this.bSetting = bSetting;
 	}
 
 	@Override
 	public boolean activate() {
-		return ctx.inventory.count()==28;
+		return 		ctx.inventory.count() == 28
+				|| 	ctx.inventory.count() == 0;
 	}
 
 	@Override
 	public void execute() {
+		System.out.println("banking");
 		startingTile = ctx.players.local().tile();
 		PathFinder mPF = new PathFinder(ctx);
 		
 		mPF.moveTo(getClosestBank().getBankTile());
 		bankAllLogs();
+		bankAllBows();
 		
 	}
 	
@@ -62,7 +67,7 @@ public class Banking extends Task<ClientContext> {
 	
 	public void bankAllLogs() {
 		
-		GameObject bankBooth = ctx.objects.select().id(11744).nearest().limit(4).shuffle().poll();;
+		GameObject bankBooth = ctx.objects.select().id(11744).nearest().limit(4).poll();;
 		
 		System.out.println(bankBooth.valid());
 		
@@ -81,5 +86,28 @@ public class Banking extends Task<ClientContext> {
 		if(ctx.inventory.count() < 28) {
 			ctx.bank.close();
 		}
-	}	
+	}
+	
+	public void bankAllBows() {
+		
+		GameObject bankBooth = ctx.objects.select().id(11744).nearest().limit(4).poll();;
+		
+		System.out.println(bankBooth.valid());
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {}	
+		
+		bankBooth.click();
+		
+		if(ctx.bank.opened()) {
+			for(BOW b: BOW.values()) {
+				ctx.bank.deposit(b.getBowId(), Bank.Amount.ALL);
+			}
+		}
+		
+		if(ctx.inventory.count() < 28) {
+			ctx.bank.close();
+		}
+	}
 }

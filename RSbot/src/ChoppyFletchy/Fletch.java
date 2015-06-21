@@ -27,8 +27,8 @@ public class Fletch extends Task<ClientContext> {
 	public boolean activate() {
 		
 		return		ctx.inventory.count() == 28
-				&& 	ctx.inventory.select().id(knifeId).poll().valid();
-
+				&& 	ctx.inventory.select().id(knifeId).poll().valid()
+				&&	ctx.inventory.select().id(bSetting.getLogToCut()).poll().valid();
 		
 	}
 
@@ -44,7 +44,9 @@ public class Fletch extends Task<ClientContext> {
 				makeHeadlessArrow();
 			}
 		} else if(bSetting.getFletch() == 2) {
-			fletchShortBow();
+			fletchShortbow();
+		} else if(bSetting.getFletch() == 3) {
+			fletchLongbow();
 		}
 		
 	}
@@ -89,7 +91,7 @@ public class Fletch extends Task<ClientContext> {
 			Item arrowShaft = ctx.inventory.select().id(arrowShaftId).poll();
 			
 			if (!feather.valid() || !arrowShaft.valid()) {
-				return;
+				break;
 			}
 			
 			feather.interact("Use");
@@ -117,11 +119,69 @@ public class Fletch extends Task<ClientContext> {
 		}
 	}
 	
-	public void fletchShortBow() {
+	public void fletchShortbow() {
 		
-		
-		
+		while(true) {
+			
+			Item knife 	= ctx.inventory.select().id(knifeId).poll();
+			Item log 	= ctx.inventory.select().id(bSetting.getLogToCut()).poll();
+			
+			if (!log.valid()) {
+				break;
+			}
+			
+			if(ctx.players.local().animation() == -1) {
+			
+				ChopnFletcher.status = "Fletching";
+				
+				knife.interact("Use");
+				log.interact("use");	
+			}
+			
+			for(int i = 0; i < 4; i++) {
+				Component shortbowComponent = ctx.widgets.widget(304).component(8);
+				
+				if(shortbowComponent.valid()) {
+					shortbowComponent.interact(false, "Make 10");
+				} else {
+					try {
+						Thread.sleep(400);
+					} catch (InterruptedException e) {}	
+				}		
+			}	
+		}
 	}
 	
-	
+	public void fletchLongbow() {
+		
+		while(true) {
+			
+			Item knife 	= ctx.inventory.select().id(knifeId).poll();
+			Item log 	= ctx.inventory.select().id(bSetting.getLogToCut()).poll();
+			
+			if (!log.valid()) {
+				break;
+			}
+			
+			if(ctx.players.local().animation() == -1) {
+			
+				ChopnFletcher.status = "Fletching";
+				
+				knife.interact("Use");
+				log.interact("use");	
+			}
+			
+			for(int i = 0; i < 4; i++) {
+				Component shortbowComponent = ctx.widgets.widget(304).component(10);
+				
+				if(shortbowComponent.valid()) {
+					shortbowComponent.interact(false, "Make 10");
+				} else {
+					try {
+						Thread.sleep(400);
+					} catch (InterruptedException e) {}	
+				}		
+			}	
+		}
+	}
 }

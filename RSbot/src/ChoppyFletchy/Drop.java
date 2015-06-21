@@ -18,7 +18,7 @@ public class Drop extends Task<ClientContext> {
 
 	@Override
 	public boolean activate() {
-		return true;
+		return ctx.inventory.count() == 28;
 	}
 
 	@Override

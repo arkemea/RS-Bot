@@ -33,8 +33,8 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 		Tile anchor 		= ctx.players.local().tile();
 		int logToCut 		= LOG.WILLOW.getLogId();
 		int treeToChop[]	= TREE.WILLOW.getTreeIds();
-		int fletch			= 0;
-		boolean powerCut 	= false;
+		int fletch			= 3;
+		boolean powerCut 	= true;
 		
 		BotSetting bSetting = new BotSetting(anchor, logToCut, treeToChop, fletch, powerCut);
 		
@@ -43,7 +43,12 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 		} else if(powerCut && fletch != 0) {
 			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx, bSetting), new Fletch(ctx, bSetting), new Drop(ctx,bSetting)));
 		} else if(!powerCut && fletch == 0) {
-			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx, bSetting), new Banking(ctx)));
+			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx, bSetting), new Banking(ctx, bSetting)));
+		} else if(!powerCut && fletch != 0) {
+			
+			taskList.add(new Chop(ctx, bSetting));
+			taskList.add(new Fletch(ctx, bSetting));
+			taskList.add(new Banking(ctx, bSetting));
 		}
 		
 		
