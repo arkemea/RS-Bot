@@ -27,6 +27,9 @@ public class PathFinder extends Task<ClientContext> {
 	}
 	
 	public double playerDistanceTo(Tile targetTile) {
+		
+		System.out.println(ctx.players.local().tile().x() + " " + ctx.players.local().tile().y() + " - " + targetTile.x() + " " + targetTile.y());
+		
 		return 
 				Math.sqrt(
 				Math.pow( Math.abs(ctx.players.local().tile().x()-targetTile.x()), 2) *

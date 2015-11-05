@@ -58,8 +58,34 @@ public class SettingGUI extends JPanel implements ActionListener {
    public void actionPerformed(ActionEvent evt) {
 	   
 	   if(evt.getSource().equals(isDoneButton)) {
+		   
 		   ChopnFletcher.isDone = true;
-		   this.setEnabled(false);
+		   
+		   
+		   if(treeChoice.getSelectedItem().toString().equals("Normal")) {
+			   ChopnFletcher.treeToChop = TREE.NORMAL.getTreeIds();
+		   } else if(treeChoice.getSelectedItem().toString().equals("Oak")) {
+			   ChopnFletcher.treeToChop = TREE.OAK.getTreeIds();
+		   }else if(treeChoice.getSelectedItem().toString().equals("Willow")) {
+			   ChopnFletcher.treeToChop = TREE.WILLOW.getTreeIds();
+		   }else if(treeChoice.getSelectedItem().toString().equals("Maple")) {
+			   ChopnFletcher.treeToChop = TREE.MAPLE.getTreeIds();
+		   }else if(treeChoice.getSelectedItem().toString().equals("Magic")) {
+			   ChopnFletcher.treeToChop = TREE.MAGIC.getTreeIds();
+		   }
+		   
+		   if(fletchChoice.getSelectedItem().toString().equals("Dont Fletch")) {
+			   ChopnFletcher.fletch = 0;
+		   } else if(fletchChoice.getSelectedItem().toString().equals("Arrows")) {
+			   ChopnFletcher.fletch = 1;
+		   } else if(fletchChoice.getSelectedItem().toString().equals("Shortbows")) {
+			   ChopnFletcher.fletch = 2;
+		   } else if(fletchChoice.getSelectedItem().toString().equals("Longbows")) {
+			   ChopnFletcher.fletch = 3;
+		   }
+		   
+		   ChopnFletcher.powerCut = powercuttingChoice.isSelected();
+		  // this.setVisible(false);
 		   
 	   } else if(evt.getSource().equals(bankChoice)) {
 		   String[] choices;

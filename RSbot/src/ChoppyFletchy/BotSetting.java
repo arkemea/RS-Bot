@@ -5,11 +5,12 @@ import org.powerbot.script.rt4.ClientContext;
 
 public class BotSetting {
 
-	private Tile anchor = new Tile(0,0);
+	private Tile anchor 			= new Tile(0,0);
 	
+	private Banking.BANK bankToBank = Banking.BANK.DEFAULT;
 	private int treeToChop[];
-	private int logToCut = 1511;
-	private int fletch = 0;
+	private int logToCut 			= 1511;
+	private int fletch 				= 0;
 	//0 dont fletch, 1 arrowshafts, 2 shortbow, 3 longbow
 	
 	boolean powerCutting;

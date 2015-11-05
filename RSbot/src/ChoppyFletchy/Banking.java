@@ -14,7 +14,7 @@ public class Banking extends Task<ClientContext> {
 		DEFAULT(new Tile(0,0), 0),
 		DRAYNOR(new Tile(3093,3243), 11744),
 		VARROCKEAST(new Tile(3253, 3421), 0),
-		SEERSVILLAGE(new Tile(2725, 3491), 25808);
+		SEERSVILLAGE(new Tile(2725, 3490), 25808);
 		
 		private Tile bankTile;
 		private int bankBoothId;
@@ -47,18 +47,25 @@ public class Banking extends Task<ClientContext> {
 
 	@Override
 	public void execute() {
-		System.out.println("banking");
+		ChopnFletcher.status = "Banking";
 		startingTile = ctx.players.local().tile();
 		PathFinder mPF = new PathFinder(ctx);
 		
-		if(mPF.playerDistanceTo(getClosestBank().getBankTile()) > 5) {
+		System.out.println(mPF.playerDistanceTo(getClosestBank().getBankTile()));
+		while(mPF.playerDistanceTo(getClosestBank().getBankTile()) > 5.0) {
 			
-			mPF.moveTo(getClosestBank().getBankTile());
+			if(!ctx.players.local().inMotion()) {
+				mPF.moveTo(getClosestBank().getBankTile());
+			} else {
+				ctx.movement.step(ctx.objects.select().id(getClosestBank().getBankBoothId()).nearest().limit(4).shuffle().poll());
+			}
 		}
 		
-		bankAllLogs();
-		bankAllBows();
-		
+		if(bSetting.getFletch() != 0) {
+			bankAllBows();
+		} else {
+			bankAllLogs();
+		}
 	}
 	
 	public BANK getClosestBank() {
@@ -78,20 +85,17 @@ public class Banking extends Task<ClientContext> {
 	}
 	
 	public void bankAllLogs() {
+				
+		GameObject bankBooth = ctx.objects.select().id(getClosestBank().getBankBoothId()).nearest().limit(4).shuffle().poll();;
 		
-		GameObject bankBooth = ctx.objects.select().id(getClosestBank().bankBoothId).nearest().limit(4).poll();;
-		
-		ctx.movement.step(bankBooth);
-		
-		System.out.println(bankBooth.valid());
+		//System.out.println(bankBooth.valid());
 		
 		try {
 			Thread.sleep(3000);
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {}	
 		
-		ctx.camera.turnTo(bankBooth);
 		bankBooth.click();
-		
+	
 		if(ctx.bank.opened()) {
 			for(LOG l: LOG.values()) {
 				ctx.bank.deposit(l.getLogId(), Bank.Amount.ALL);
@@ -101,15 +105,16 @@ public class Banking extends Task<ClientContext> {
 		if(ctx.inventory.count() < 28) {
 			ctx.bank.close();
 		}
-	}
+	}	
+		
 	
 	public void bankAllBows() {
 		
-		GameObject bankBooth = ctx.objects.select().id(getClosestBank().bankBoothId).nearest().limit(4).poll();;
+		GameObject bankBooth = ctx.objects.select().id(getClosestBank().getBankBoothId()).nearest().limit(4).poll();;
 		
-		ctx.movement.step(bankBooth);
+
 		
-		System.out.println(bankBooth.valid());
+		//System.out.println(bankBooth.valid());
 		
 		try {
 			Thread.sleep(3000);
@@ -121,9 +126,9 @@ public class Banking extends Task<ClientContext> {
 			for(BOW b: BOW.values()) {
 				ctx.bank.deposit(b.getBowId(), Bank.Amount.ALL);
 			}
-		}
+		} 
 		
-		if(ctx.inventory.count() < 28) {
+		if(ctx.inventory.count() < 28 && ctx.inventory.count() != 0) {
 			ctx.bank.close();
 		}
 	}

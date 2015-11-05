@@ -34,10 +34,10 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 	public JFrame frame;
 	
 	public Tile anchor 					= ctx.players.local().tile();
-	public int logToCut 				= LOG.MAPLE.getLogId();
-	public int treeToChop[]				= TREE.MAPLE.getTreeIds();
-	public int fletch					= 2;
-	public boolean powerCut 			= false;
+	public static int logToCut 			= LOG.MAPLE.getLogId();
+	public static int treeToChop[]		= TREE.MAPLE.getTreeIds();
+	public static int fletch			= 2;
+	public static boolean powerCut 		= false;
 	
 	@Override
 	public void start() {
@@ -49,9 +49,12 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
         });
 		
 		while(!isDone)  {
-			System.out.println(isDone);
+			System.out.println("der");
 		}
-			
+		
+		frame.setEnabled(false);
+		
+		System.out.println(fletch);
 		BotSetting bSetting = new BotSetting(anchor, logToCut, treeToChop, fletch, powerCut);
 		
 		if(powerCut && fletch == 0) {

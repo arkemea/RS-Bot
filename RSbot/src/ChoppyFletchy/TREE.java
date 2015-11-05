@@ -4,7 +4,8 @@ public enum TREE {
 	NORMAL(1276,1278),
 	OAK(11756),
 	WILLOW(11755,11759,11763,11761),
-	MAPLE(11762);
+	MAPLE(11762),
+	MAGIC(0);
 	
 	private int treeIds[];
 	
