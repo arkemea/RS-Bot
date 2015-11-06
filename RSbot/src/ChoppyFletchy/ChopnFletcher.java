@@ -9,6 +9,7 @@ import java.util.Arrays;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import org.powerbot.script.Condition;
 import org.powerbot.script.MessageEvent;
 import org.powerbot.script.MessageListener;
 import org.powerbot.script.PaintListener;
@@ -21,38 +22,34 @@ import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.Item;
 import org.powerbot.script.rt4.Players;
 
-@Script.Manifest(name = "ChopnFletcher", description = "Chops any log with fletching and banking support")
+@Script.Manifest(name = "ArkChopnFletch", description = "Chops any log with fletching and banking support")
 
 public class ChopnFletcher extends PollingScript<ClientContext> implements MessageListener, PaintListener  {
 	
-	private long startTime				= System.currentTimeMillis();
 	private ArrayList<Task> taskList 	= new ArrayList<Task>();
-	public StatGraphic mGraphic			= new StatGraphic(ctx, startTime);
-	static String status				=	"Starting bot";
-	public static boolean isDone		= false;
 	
-	public JFrame frame;
+	private long startTime				= System.currentTimeMillis();
+	
+	public StatGraphic mGraphic			= new StatGraphic(ctx, startTime);
+	static String status				= "Starting bot";
 	
 	public Tile anchor 					= ctx.players.local().tile();
 	public static int logToCut 			= LOG.MAPLE.getLogId();
 	public static int treeToChop[]		= TREE.MAPLE.getTreeIds();
 	public static int fletch			= 2;
 	public static boolean powerCut 		= false;
+	public static boolean startScript   = false;
 	
 	@Override
 	public void start() {
 		
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
+		Gui settings = new Gui(ctx, taskList);
+		settings.setVisible(true);
 		
-		while(!isDone)  {
-			System.out.println("der");
+		while(!startScript) {
+			Condition.sleep(100);
 		}
-		
-		frame.setEnabled(false);
+		status = "Bot started";
 		
 		System.out.println(fletch);
 		BotSetting bSetting = new BotSetting(anchor, logToCut, treeToChop, fletch, powerCut);
@@ -95,20 +92,7 @@ public class ChopnFletcher extends PollingScript<ClientContext> implements Messa
 		
 	}
 	
-	private void createAndShowGUI() {
-	       //Create and set up the window.
-	       frame = new JFrame("ComboBoxDemo");
-	       frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-
-	       //Create and set up the content pane.
-	       JComponent newContentPane = new SettingGUI();
-	       newContentPane.setOpaque(true); //content panes must be opaque
-	       frame.setContentPane(newContentPane);
-
-	       //Display the window.
-	       frame.pack();
-	       frame.setVisible(true);
-	   }
+	
 	
 }
 
