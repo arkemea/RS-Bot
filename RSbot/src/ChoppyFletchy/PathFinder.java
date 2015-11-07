@@ -1,6 +1,8 @@
 package ChoppyFletchy;
 
-import org.powerbot.script.ClientAccessor;
+import java.util.concurrent.Callable;
+
+import org.powerbot.script.Condition;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
@@ -28,8 +30,6 @@ public class PathFinder extends Task<ClientContext> {
 	
 	public double playerDistanceTo(Tile targetTile) {
 		
-		System.out.println(ctx.players.local().tile().x() + " " + ctx.players.local().tile().y() + " - " + targetTile.x() + " " + targetTile.y());
-		
 		return 
 				Math.sqrt(
 				Math.pow( Math.abs(ctx.players.local().tile().x()-targetTile.x()), 2) *
@@ -46,32 +46,50 @@ public class PathFinder extends Task<ClientContext> {
 	}
 	
 	public void moveTo(Tile targetTile) {
-	
 		while(true) {
-			if(this.playerDistanceTo(targetTile) < 20 )
-			{break;}
-			else {
-				ctx.movement.step(targetTile);
-				
-				try {
-					Thread.sleep(1500);
-				} catch (InterruptedException e) {}	
+			Condition.wait(new Callable<Boolean>() {
+				 
+			   @Override
+			   public Boolean call() throws Exception {   
+				   PathFinder mPF = new PathFinder(ctx);
+				  
+				   if(mPF.playerDistanceTo(targetTile) < 20) {
+					   return true;
+				   } else if(!ctx.players.local().inMotion()) {
+					   ctx.movement.step(targetTile);
+				   }
+				   return false;
+			   }   
+			}, 500, 8);	
+			
+			if(this.playerDistanceTo(targetTile) < 20) {
+				break;
 			}
 		}
 		
 	}
 	public void moveToExact(Tile targetTile) {
+		
 		while(true) {
-			if(this.playerDistanceTo(targetTile) < 5 )
-			{break;}
-			else {
-				ctx.movement.step(targetTile);
-				
-				try {
-					Thread.sleep(1500);
-				} catch (InterruptedException e) {}	
+			Condition.wait(new Callable<Boolean>() {
+				 
+			   @Override
+			   public Boolean call() throws Exception {   
+				   PathFinder mPF = new PathFinder(ctx);
+				  
+				   if(mPF.playerDistanceTo(targetTile) < 5) {
+					   return true;
+				   } else if(!ctx.players.local().inMotion()) {
+					   ctx.movement.step(targetTile);
+				   }
+				   return false;
+			   }   
+			}, 500, 8);	
+			
+			if(this.playerDistanceTo(targetTile) < 5) {
+				break;
 			}
-		}
+		}	
 	}
 }
 
