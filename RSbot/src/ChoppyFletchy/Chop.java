@@ -1,23 +1,13 @@
 package ChoppyFletchy;
 
-import org.powerbot.script.MessageEvent;
-import org.powerbot.script.MessageListener;
-import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 
-
-
-
 public class Chop extends Task<ClientContext>{
-	private int treeIds[]	 	= {1276, 1278};
 	private int clickCounter	= 0;
 	
-	private BotSetting bSetting;
-	
-	public Chop(ClientContext ctx, BotSetting bSetting) {
+	public Chop(ClientContext ctx) {
 		super(ctx);
-		this.bSetting = bSetting;
 	}
 	
 	@Override
@@ -29,17 +19,18 @@ public class Chop extends Task<ClientContext>{
 	@Override
 	public void execute() {
 
-			if(!(ctx.players.local().animation() == -1)) {
-				ChopnFletcher.status = "Chopping";
-			} else if(ctx.players.local().inMotion()) {
-				ChopnFletcher.status = "Moving to tree";
+			if(ctx.players.local().inMotion()) {
+				ChopnFletch.status = "Moving to tree";
+
+			} else if(!(ctx.players.local().animation() == -1)) {
+				ChopnFletch.status = "Chopping";
 			}
 			
-			final GameObject tree 	= ctx.objects.select().id(bSetting.getTreeToChop()).nearest().poll();
+			final GameObject tree 	= ctx.objects.select().id(ChopnFletch.treeToChop).nearest().poll();
 			PathFinder mPF			= new PathFinder(ctx);
 			
-			if(mPF.distanceBetween(bSetting.getAnchor(), tree.tile()) > 100) {
-				mPF.moveTo(bSetting.getAnchor());
+			if(mPF.distanceBetween(ChopnFletch.anchor, tree.tile()) > 100) {
+				mPF.moveTo(ChopnFletch.anchor);
 			}
 			
 			if(ctx.players.local().animation() == -1 && ctx.players.local().inMotion() == false) {

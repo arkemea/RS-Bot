@@ -7,7 +7,7 @@ public enum BANK {
 	DEFAULT(new Area(new Tile(0,0), new Tile(0,0)), 0),
 	DRAYNOR(new Area(new Tile(0,0), new Tile(0,0)), 11744),
 	VARROCKEAST(new Area(new Tile(0,0), new Tile(0,0)), 0),
-	SEERSVILLAGE(new Area(new Tile(2721,3493), new Tile(2729,3490)), 25808);
+	SEERSVILLAGE(new Area(new Tile(2723,3496), new Tile(2727,3491)), 25808);
 	
 	private Area bankArea;
 	private int bankBoothId;

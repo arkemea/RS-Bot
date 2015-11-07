@@ -22,16 +22,16 @@ public class Banking extends Task<ClientContext> {
 	@Override
 	public void execute() {
 		
-		ChopnFletcher.status = "Banking";
+		ChopnFletch.status = "Banking";
 		
 		PathFinder mPF = new PathFinder(ctx);
-		mPF.moveToExact(ChopnFletcher.bankToBank.getBankArea().getRandomTile());
+		mPF.moveToExact(ChopnFletch.bankToBank.getBankArea().getRandomTile());
 		
-		System.out.println(ChopnFletcher.bankToBank.getBankArea().contains(ctx.players.local().tile()));
+		System.out.println(ChopnFletch.bankToBank.getBankArea().contains(ctx.players.local().tile()));
 		
-		if(ChopnFletcher.bankToBank.getBankArea().contains(ctx.players.local().tile())) {
+		if(ChopnFletch.bankToBank.getBankArea().contains(ctx.players.local().tile())) {
 			
-			GameObject bankBooth = ctx.objects.select().id(ChopnFletcher.bankToBank.getBankBoothId()).nearest().limit(4).shuffle().poll();
+			GameObject bankBooth = ctx.objects.select().id(ChopnFletch.bankToBank.getBankBoothId()).nearest().peek();
 			
 			if(bankBooth.inViewport()) {
 				bankBooth.click();	
@@ -44,7 +44,7 @@ public class Banking extends Task<ClientContext> {
 				@Override
 				public Boolean call() throws Exception {
 					if(ctx.bank.opened()) {
-						System.out.println("Bankerino " + ChopnFletcher.fletch);
+						System.out.println("Bankerino " + ChopnFletch.fletch);
 						bankAllBows();
 						bankAllLogs();
 						ctx.bank.close();

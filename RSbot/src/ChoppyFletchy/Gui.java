@@ -4,71 +4,78 @@ package ChoppyFletchy;
 
 import java.awt.*;      
 import java.awt.event.*; 
-import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import org.powerbot.script.rt4.ClientContext;
+
+
  
 public class Gui extends JFrame implements ActionListener {
+	
+   private static final long serialVersionUID = 494368510764413341L;
+	
    private JPanel contentPane;
    private JComboBox<String> bankChoice, treeChoice, fletchChoice;
-   
    private JRadioButton powercuttingChoice; 
-   
    private Button startButton;
    
    private ClientContext ctx;
-   private ArrayList<Task> taskList;
    
    private String[] bankChoices = {"Draynor", "Seers Village"},
 		   			treeChoices = {"Normal", "Oak", "Willow"}, 
 		   			fletchChoices = {"Dont Fletch", "Arrows", "Shortbows", "Longbows"};
-   
+		   
    public void onStart() {
 			     
 	   if(treeChoice.getSelectedItem().toString().equals("Normal")) {
-		   ChopnFletcher.treeToChop = TREE.NORMAL.getTreeIds();
+		   ChopnFletch.treeToChop = TREE.NORMAL.getTreeIds();
+		   ChopnFletch.logToCut = LOG.NORMAL.getLogId();
 	   } else if(treeChoice.getSelectedItem().toString().equals("Oak")) {
-		   ChopnFletcher.treeToChop = TREE.OAK.getTreeIds();
+		   ChopnFletch.treeToChop = TREE.OAK.getTreeIds();
+		   ChopnFletch.logToCut = LOG.OAK.getLogId();
 	   }else if(treeChoice.getSelectedItem().toString().equals("Willow")) {
-		   ChopnFletcher.treeToChop = TREE.WILLOW.getTreeIds();
+		   ChopnFletch.treeToChop = TREE.WILLOW.getTreeIds();
+		   ChopnFletch.logToCut = LOG.WILLOW.getLogId();
 	   }else if(treeChoice.getSelectedItem().toString().equals("Maple")) {
-		   ChopnFletcher.treeToChop = TREE.MAPLE.getTreeIds();
+		   ChopnFletch.treeToChop = TREE.MAPLE.getTreeIds();
+		   ChopnFletch.logToCut = LOG.MAPLE.getLogId();
 	   }else if(treeChoice.getSelectedItem().toString().equals("Magic")) {
-		   ChopnFletcher.treeToChop = TREE.MAGIC.getTreeIds();
+		   ChopnFletch.treeToChop = TREE.MAGIC.getTreeIds();
+		   ChopnFletch.logToCut = LOG.MAGIC.getLogId();
 	   }
    
 	   if(fletchChoice.getSelectedItem().toString().equals("Dont Fletch")) {
-		   ChopnFletcher.fletch = 0;
+		   ChopnFletch.fletch = 0;
 	   } else if(fletchChoice.getSelectedItem().toString().equals("Arrows")) {
-		   ChopnFletcher.fletch = 1;
+		   ChopnFletch.fletch = 1;
 	   } else if(fletchChoice.getSelectedItem().toString().equals("Shortbows")) {
-		   ChopnFletcher.fletch = 2;
+		   ChopnFletch.fletch = 2;
 	   } else if(fletchChoice.getSelectedItem().toString().equals("Longbows")) {
-		   ChopnFletcher.fletch = 3;
+		   ChopnFletch.fletch = 3;
 	   }
 	   
-	   ChopnFletcher.powerCut = powercuttingChoice.isSelected();
-	   ChopnFletcher.startScript = true;
+	   if(bankChoice.getSelectedItem().toString().equals("Draynor")) {
+		   ChopnFletch.bankToBank = BANK.DRAYNOR;
+	   } else if(bankChoice.getSelectedItem().toString().equals("Seers Village")) {
+		   ChopnFletch.bankToBank = BANK.SEERSVILLAGE;
+	   }
+	   
+	   ChopnFletch.powerCut = powercuttingChoice.isSelected();
+	   ChopnFletch.startScript = true;
 	   
 	   dispose();
    }
    
    
-   public Gui (ClientContext ctx, ArrayList<Task> taskList) {
+   public Gui (ClientContext ctx2) {
 	   
-	  this.ctx = ctx;
-	  this.taskList = taskList;
+	  this.ctx = ctx2;
 	  
 	  setResizable(false);
 	  setTitle("ChopnFletcher");
