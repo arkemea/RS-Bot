@@ -2,35 +2,27 @@ package ChoppyFletchy;
 
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Item;
-
+//TODO Rewrite this class, shit is hard to look at
 public class Drop extends Task<ClientContext> {
-
-	BotSetting bSetting;
 	
-	
-	
-	
-	
-	public Drop(ClientContext ctx, BotSetting bSetting) {
+	public Drop(ClientContext ctx) {
 		super(ctx);
-		this.bSetting = bSetting;
 	}
 
 	@Override
 	public boolean activate() {
-		return 		ctx.inventory.count() == 28
-				|| 	ctx.inventory.count() == 0;
+		return 		ctx.inventory.select().count() == 28;
 	}
 
 	@Override
 	public void execute() {
 		
-		if(bSetting.powerCutting && bSetting.getFletch() != 0) {
+		if(ChopnFletch.powerCut && ChopnFletch.fletch != 0) {
 			dropBows();
 			dropWrongLogs();
-		} else if(bSetting.powerCutting) {
+		} else if(ChopnFletch.powerCut) {
 			dropAllLogs();
-		} else if(!bSetting.powerCutting) {
+		} else if(!ChopnFletch.powerCut) {
 			dropWrongLogs();
 		}
 		
@@ -38,9 +30,9 @@ public class Drop extends Task<ClientContext> {
 	
 	public void dropLogs() {
 		
-		if(bSetting.powerCutting && bSetting.getFletch() == 0) {
+		if(ChopnFletch.powerCut && ChopnFletch.fletch == 0) {
 			dropAllLogs();
-		} else if(bSetting.powerCutting && bSetting.getFletch() != 0) {
+		} else if(ChopnFletch.powerCut && ChopnFletch.fletch != 0) {
 			dropWrongLogs();
 			dropBows();
 		} else {
@@ -68,7 +60,7 @@ public class Drop extends Task<ClientContext> {
 		
 		for(Item i: ctx.inventory.select()) {
 			for(LOG l: LOG.values()) {
-				if(i.id() == l.getLogId() && l.getLogId() != bSetting.getLogToCut()) {
+				if(i.id() == l.getLogId() && l.getLogId() != ChopnFletch.logToCut) {
 					i.interact("Drop");
 				}
 			}

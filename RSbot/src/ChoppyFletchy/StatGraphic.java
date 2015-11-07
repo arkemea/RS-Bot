@@ -3,22 +3,14 @@ package ChoppyFletchy;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
-import java.io.File;
+import java.awt.Point;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
 import javax.imageio.ImageIO;
 
-import org.powerbot.script.MessageEvent;
-import org.powerbot.script.MessageListener;
-import org.powerbot.script.PaintListener;
 import org.powerbot.script.rt4.ClientContext;
-import org.powerbot.script.rt4.Skills;
+
 
 public class StatGraphic extends Task<ClientContext> {
 	
@@ -103,15 +95,25 @@ public class StatGraphic extends Task<ClientContext> {
 		g.drawString(getFletchingXPHourPaint(), 305, 410);
 		
 		//Woodcutting
-		g.drawString(ChopnFletcher.status, 435, 356);
+		g.drawString(ChopnFletch.status, 435, 356);
 		g.drawString(String.valueOf(logChopped), 435, 374);
 		g.drawString(getWoodcuttingXPTotalPaint(), 435, 392);
 		g.drawString(getWoodcuttingXPHourPaint(), 435, 410);
 		
 		drawFletchingBar(g);
 		drawWoodcuttingBar(g);
+		drawMousePaint(g);
 	}
 	
+	private void drawMousePaint(Graphics g) {
+		
+		Point mouse = ctx.input.getLocation();
+		g.setColor(Color.CYAN);
+		g.drawLine(mouse.x - 5, mouse.y - 5, mouse.x + 5, mouse.y + 5);
+		g.drawLine(mouse.x + 5, mouse.y - 5, mouse.x - 5, mouse.y + 5);
+		
+	}
+
 	public void inputData(String data) {
 		
 		String fletchString1 = "cut the wood";
