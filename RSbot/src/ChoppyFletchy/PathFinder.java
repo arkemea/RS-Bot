@@ -47,6 +47,11 @@ public class PathFinder extends Task<ClientContext> {
 	
 	public void moveTo(Tile targetTile) {
 		while(true) {
+			
+			if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
+				ctx.movement.running(true);
+			}
+			
 			Condition.wait(new Callable<Boolean>() {
 				 
 			   @Override
@@ -71,6 +76,11 @@ public class PathFinder extends Task<ClientContext> {
 	public void moveToExact(Tile targetTile) {
 		
 		while(true) {
+			
+			if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
+				ctx.movement.running(true);
+			}
+			
 			Condition.wait(new Callable<Boolean>() {
 				 
 			   @Override
