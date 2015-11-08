@@ -6,7 +6,6 @@ import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.Bank;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
-import org.powerbot.script.rt4.Item;
 
 public class Banking extends Task<ClientContext> {
 

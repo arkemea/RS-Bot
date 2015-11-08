@@ -1,5 +1,8 @@
 package ChoppyFletchy;
 
+import java.util.concurrent.Callable;
+
+import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 
@@ -32,6 +35,17 @@ public class Chop extends Task<ClientContext>{
 			if(mPF.distanceBetween(ChopnFletch.anchor, tree.tile()) > 100) {
 				mPF.moveTo(ChopnFletch.anchor);
 			}
+			
+			Condition.wait(new Callable<Boolean>() {
+				 
+				@Override
+				public Boolean call() throws Exception {
+					if(mPF.playerDistanceTo(tree.tile()) > 40) {
+						return false;
+					}
+					return true;
+				}
+			}, 50, 50);
 			
 			if(ctx.players.local().animation() == -1 && ctx.players.local().inMotion() == false) {
 				if(clickCounter > 5) {
