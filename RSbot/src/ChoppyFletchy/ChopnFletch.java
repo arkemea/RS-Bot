@@ -43,7 +43,7 @@ public class ChopnFletch extends PollingScript<ClientContext> implements Message
 			Condition.sleep(100);
 		}
 		status = "Bot started";
-
+		System.out.println(anchor.toString() + " " + logToCut + " " + treeToChop[0] + " " + fletch + " " + bankToBank + " " + powerCut);
 		
 		if(powerCut && fletch == 0) {
 			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx), new Drop(ctx)));

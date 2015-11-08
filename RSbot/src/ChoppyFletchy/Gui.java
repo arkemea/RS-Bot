@@ -28,42 +28,73 @@ public class Gui extends JFrame implements ActionListener {
    private ClientContext ctx;
    
    private String[] bankChoices = {"Draynor", "Seers Village"},
-		   			treeChoices = {"Normal", "Oak", "Willow"}, 
+		   			treeChoices = {"Normal", "Oak", "Willow", "Maple", "Yew", "Magic"}, 
 		   			fletchChoices = {"Dont Fletch", "Arrows", "Shortbows", "Longbows"};
 		   
    public void onStart() {
-			     
-	   if(treeChoice.getSelectedItem().toString().equals("Normal")) {
-		   ChopnFletch.treeToChop = TREE.NORMAL.getTreeIds();
-		   ChopnFletch.logToCut = LOG.NORMAL.getLogId();
-	   } else if(treeChoice.getSelectedItem().toString().equals("Oak")) {
-		   ChopnFletch.treeToChop = TREE.OAK.getTreeIds();
-		   ChopnFletch.logToCut = LOG.OAK.getLogId();
-	   }else if(treeChoice.getSelectedItem().toString().equals("Willow")) {
-		   ChopnFletch.treeToChop = TREE.WILLOW.getTreeIds();
-		   ChopnFletch.logToCut = LOG.WILLOW.getLogId();
-	   }else if(treeChoice.getSelectedItem().toString().equals("Maple")) {
-		   ChopnFletch.treeToChop = TREE.MAPLE.getTreeIds();
-		   ChopnFletch.logToCut = LOG.MAPLE.getLogId();
-	   }else if(treeChoice.getSelectedItem().toString().equals("Magic")) {
-		   ChopnFletch.treeToChop = TREE.MAGIC.getTreeIds();
-		   ChopnFletch.logToCut = LOG.MAGIC.getLogId();
-	   }
-   
-	   if(fletchChoice.getSelectedItem().toString().equals("Dont Fletch")) {
-		   ChopnFletch.fletch = 0;
-	   } else if(fletchChoice.getSelectedItem().toString().equals("Arrows")) {
-		   ChopnFletch.fletch = 1;
-	   } else if(fletchChoice.getSelectedItem().toString().equals("Shortbows")) {
-		   ChopnFletch.fletch = 2;
-	   } else if(fletchChoice.getSelectedItem().toString().equals("Longbows")) {
-		   ChopnFletch.fletch = 3;
-	   }
 	   
-	   if(bankChoice.getSelectedItem().toString().equals("Draynor")) {
-		   ChopnFletch.bankToBank = BANK.DRAYNOR;
-	   } else if(bankChoice.getSelectedItem().toString().equals("Seers Village")) {
-		   ChopnFletch.bankToBank = BANK.SEERSVILLAGE;
+	   switch (treeChoice.getSelectedItem().toString()) {
+	   	case "Normal":
+	   		ChopnFletch.treeToChop 	= TREE.NORMAL.getTreeIds();
+			ChopnFletch.logToCut 	= LOG.NORMAL.getLogId();
+			break;
+	   	case "Oak":
+	   		ChopnFletch.treeToChop 	= TREE.OAK.getTreeIds();
+			ChopnFletch.logToCut 	= LOG.OAK.getLogId();
+			break;
+	   	case "Willow":
+	   		ChopnFletch.treeToChop 	= TREE.WILLOW.getTreeIds();
+			ChopnFletch.logToCut 	= LOG.WILLOW.getLogId();
+			break;
+	   	case "Maple":
+	   		ChopnFletch.treeToChop 	= TREE.MAPLE.getTreeIds();
+			ChopnFletch.logToCut 	= LOG.MAPLE.getLogId();
+			break;
+	   	case "Yew":
+	   		ChopnFletch.treeToChop 	= TREE.YEW.getTreeIds();
+	   		ChopnFletch.logToCut 	= LOG.YEW.getLogId();
+	   		break;
+	   	case "Magic":
+	   		ChopnFletch.treeToChop 	= TREE.MAGIC.getTreeIds();
+			ChopnFletch.logToCut 	= LOG.MAGIC.getLogId();
+			break;
+		default:
+			break;
+		}
+	   
+	   switch (fletchChoice.getSelectedItem().toString()) {
+		case "Dont Fletch":
+			ChopnFletch.fletch = 0;
+			break;
+		case "Arrows":
+			ChopnFletch.fletch = 1;
+			break;
+		case "Shortbows":
+			ChopnFletch.fletch = 2;
+			break;
+		case "Longbows":
+			ChopnFletch.fletch = 3;
+			break;
+		default:
+			break;
+		}
+	   
+	   switch (bankChoice.getSelectedItem().toString()) {
+	   
+		case "Draynor":
+			ChopnFletch.bankToBank 	= BANK.DRAYNOR;
+			ChopnFletch.anchor		= BANK.DRAYNOR.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
+			break;
+		case "Seers Village":
+			ChopnFletch.bankToBank 	= BANK.SEERSVILLAGE;
+			ChopnFletch.anchor		= BANK.SEERSVILLAGE.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
+			break;
+		default:
+			break;
+		}
+	   
+	   if(powercuttingChoice.isSelected()) {
+		   ChopnFletch.anchor = ctx.players.local().tile();
 	   }
 	   
 	   ChopnFletch.powerCut = powercuttingChoice.isSelected();
@@ -131,39 +162,8 @@ public class Gui extends JFrame implements ActionListener {
    @Override
    public void actionPerformed(ActionEvent evt) {
 	   
-	   if(evt.getSource().equals(startButton)) {
-		   
-		   onStart();
-		   
-			   
-	   } else if(evt.getSource().equals(bankChoice)) {
-		   
-		   String[] choices;
-		   switch(bankChoice.getSelectedIndex()) {
-		   
-			   case 0:
-				   choices = new String[] {"Normal", "Oak", "Willow"};
-				   treeChoice.setModel(new JComboBox<>(choices).getModel());
-				   break;
-			   case 1:
-				   choices = new String[] {"Normal", "Oak", "Maple"};
-				   treeChoice.setModel(new JComboBox<>(choices).getModel());
-				   break;
-		   }
-		   
-	   } else if(evt.getSource().equals(treeChoice)) {
-		   String[] choices;
-		   switch(treeChoice.getSelectedIndex()) {
-		   
-			   case 0:
-				   choices = new String[] {"Dont fletch", "Arrows", "Shortbow", "Longbow"};
-				   fletchChoice.setModel(new JComboBox<>(choices).getModel());
-				   break;
-			   default:
-				   choices = new String[] {"Dont fletch", "Shortbow", "Longbow"};
-				   fletchChoice.setModel(new JComboBox<>(choices).getModel());
-				   break;
-		   }
+	   if(evt.getSource().equals(startButton)) {   
+		   onStart();	   
 	   }
 	   
    }  
