@@ -7,7 +7,7 @@ public enum BANK {
 	DEFAULT(new Area(new Tile(0,0), new Tile(0,0)), 0, null),
 	DRAYNOR(new Area(new Tile(3091,3241), new Tile(3094,3246)), 11744, SPOTS.DRAYNOR),
 	GRANDEXCHANGE(new Area(new Tile(3167,3488), new Tile(3168,3491)), 10060, SPOTS.GRANDEXCHANGE),
-	VARROCKEAST(new Area(new Tile(0,0), new Tile(0,0)), 0, null),
+	VARROCKEAST(new Area(new Tile(3257,3419), new Tile(3250,3422)), 11748, SPOTS.VARROCKEAST),
 	SEERSVILLAGE(new Area(new Tile(2721,3494), new Tile(2729,3490)), 25808, SPOTS.SEERSVILLAGE);
 	
 	private Area bankArea;

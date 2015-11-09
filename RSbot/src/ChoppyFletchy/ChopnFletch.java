@@ -29,6 +29,8 @@ public class ChopnFletch extends PollingScript<ClientContext> implements Message
 	public static int treeToChop[]		= TREE.MAPLE.getTreeIds();
 	public static int fletch			= 0;
 	public static BANK bankToBank		= BANK.DEFAULT;
+	public static int pathToWalk		= 0;
+	
 	
 	public static boolean powerCut 		= false;
 	public static boolean startScript   = false;

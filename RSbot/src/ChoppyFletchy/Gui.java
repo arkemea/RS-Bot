@@ -27,7 +27,7 @@ public class Gui extends JFrame implements ActionListener {
    
    private ClientContext ctx;
    
-   private String[] bankChoices = {"Draynor", "Seers Village", "The Grand Exchange"},
+   private String[] bankChoices = {"Draynor", "Seers Village", "The Grand Exchange", "Varrock East"},
 		   			treeChoices = {"Normal", "Oak", "Willow", "Maple", "Yew", "Magic"}, 
 		   			fletchChoices = {"Dont Fletch", "Arrows", "Shortbows", "Longbows"};
 		   
@@ -37,26 +37,32 @@ public class Gui extends JFrame implements ActionListener {
 	   	case "Normal":
 	   		ChopnFletch.treeToChop 	= TREE.NORMAL.getTreeIds();
 			ChopnFletch.logToCut 	= LOG.NORMAL.getLogId();
+			ChopnFletch.pathToWalk	= 0;
 			break;
 	   	case "Oak":
 	   		ChopnFletch.treeToChop 	= TREE.OAK.getTreeIds();
 			ChopnFletch.logToCut 	= LOG.OAK.getLogId();
+			ChopnFletch.pathToWalk	= 1;
 			break;
 	   	case "Willow":
 	   		ChopnFletch.treeToChop 	= TREE.WILLOW.getTreeIds();
 			ChopnFletch.logToCut 	= LOG.WILLOW.getLogId();
+			ChopnFletch.pathToWalk	= 2;
 			break;
 	   	case "Maple":
 	   		ChopnFletch.treeToChop 	= TREE.MAPLE.getTreeIds();
 			ChopnFletch.logToCut 	= LOG.MAPLE.getLogId();
+			ChopnFletch.pathToWalk	= 3;
 			break;
 	   	case "Yew":
 	   		ChopnFletch.treeToChop 	= TREE.YEW.getTreeIds();
 	   		ChopnFletch.logToCut 	= LOG.YEW.getLogId();
+	   		ChopnFletch.pathToWalk	= 4;
 	   		break;
 	   	case "Magic":
 	   		ChopnFletch.treeToChop 	= TREE.MAGIC.getTreeIds();
 			ChopnFletch.logToCut 	= LOG.MAGIC.getLogId();
+			ChopnFletch.pathToWalk	= 5;
 			break;
 		default:
 			break;
@@ -93,6 +99,9 @@ public class Gui extends JFrame implements ActionListener {
 			ChopnFletch.bankToBank	= BANK.GRANDEXCHANGE;
 			ChopnFletch.anchor		= BANK.GRANDEXCHANGE.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
 			break;
+		case "Varrock East":
+			ChopnFletch.bankToBank	= BANK.VARROCKEAST;
+			ChopnFletch.anchor		= BANK.VARROCKEAST.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
 		default:
 			break;
 		}

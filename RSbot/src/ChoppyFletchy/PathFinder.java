@@ -1,5 +1,8 @@
 package ChoppyFletchy;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.powerbot.script.Condition;
@@ -45,34 +48,6 @@ public class PathFinder extends Task<ClientContext> {
 				);
 	}
 	
-	public void moveTo(Tile targetTile) {
-		while(true) {
-			
-			if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
-				ctx.movement.running(true);
-			}
-			
-			Condition.wait(new Callable<Boolean>() {
-				 
-			   @Override
-			   public Boolean call() throws Exception {   
-				   PathFinder mPF = new PathFinder(ctx);
-				  
-				   if(mPF.playerDistanceTo(targetTile) < 5) {
-					   return true;
-				   } else {
-					   ctx.movement.step(targetTile);
-				   }
-				   return false;
-			   }   
-			}, 3000, 8);	
-			
-			if(this.playerDistanceTo(targetTile) < 5) {
-				break;
-			}
-		}	
-		
-	}
 	public void moveToClose(Tile targetTile) {
 		
 		while(true) {
@@ -108,6 +83,7 @@ public class PathFinder extends Task<ClientContext> {
 				ctx.movement.running(true);
 			}
 			
+	
 			Condition.wait(new Callable<Boolean>() {
 				 
 			   @Override
@@ -121,10 +97,44 @@ public class PathFinder extends Task<ClientContext> {
 				   }
 				   return false;
 			   }   
-			}, 3000, 8);	
+			}, 3000, 8);
 			
 			if(this.playerDistanceTo(targetTile) < 5) {
 				break;
+			}
+		}
+	}
+	
+	public void moveToExact(Tile[] path) {
+		
+		System.out.println( new Path(path).toString());
+		
+		for(int i = 0; i < path.length; i++ ) {
+			while(true) {
+				if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
+					ctx.movement.running(true);
+				}
+				
+				final int index = i;
+		
+				Condition.wait(new Callable<Boolean>() {
+					 
+				   @Override
+				   public Boolean call() throws Exception {   
+					   PathFinder mPF = new PathFinder(ctx);
+					  
+					if(mPF.playerDistanceTo(path[index]) < 5) {
+						   return true;
+					   } else if(!ctx.players.local().inMotion()) {
+						   ctx.movement.step(path[index]);
+					   }
+					   return false;
+				   }   
+				}, 200, 50);
+				
+				if(this.playerDistanceTo(path[i]) < 5) {
+					break;
+				}
 			}
 		}
 	}

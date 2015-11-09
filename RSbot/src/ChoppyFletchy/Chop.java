@@ -29,7 +29,11 @@ public class Chop extends Task<ClientContext>{
 		GameObject tree 		= ctx.objects.select().id(ChopnFletch.treeToChop).nearest().poll();
 		PathFinder mPF			= new PathFinder(ctx);
 		
-		if(mPF.playerDistanceTo(tree.tile()) > 50) {
+		if(mPF.playerDistanceTo(ChopnFletch.anchor) > 50) {
+			
+			mPF.moveToExact(ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getTilePath());
+			
+		} else if(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) > 50) {
 			
 			mPF.moveToClose(ChopnFletch.anchor);
 			
@@ -39,8 +43,8 @@ public class Chop extends Task<ClientContext>{
 				public Boolean call() throws Exception {
 					GameObject tree 	= ctx.objects.select().id(ChopnFletch.treeToChop).nearest().poll();
 					
-					if(mPF.playerDistanceTo(tree.tile()) > 50) {
-						System.out.println(mPF.playerDistanceTo(tree.tile()) +" no tree");
+					if(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) > 50) {
+						System.out.println(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) +" no tree");
 						ChopnFletch.status = "No trees";
 						return false;
 					}
