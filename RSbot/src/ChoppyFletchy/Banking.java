@@ -43,6 +43,7 @@ public class Banking extends Task<ClientContext> {
 						System.out.println("Bankerino " + ChopnFletch.fletch);
 						bankAllBows();
 						bankAllLogs();
+						bankAllNests();
 						ctx.bank.close();
 						return true;
 					}
@@ -75,6 +76,12 @@ public class Banking extends Task<ClientContext> {
 	public void bankAllBows() {
 		for(BOW b: BOW.values()) {
 			ctx.bank.deposit(b.getBowId(), Bank.Amount.ALL);
+		}
+	}
+	
+	public void bankAllNests() {
+		for(NEST n: NEST.values()) {
+			ctx.bank.deposit(n.getId(), Bank.Amount.ALL);
 		}
 	}
 }
