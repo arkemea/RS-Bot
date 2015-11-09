@@ -29,7 +29,7 @@ public class Banking extends Task<ClientContext> {
 		
 		if(ChopnFletch.bankToBank.getBankArea().contains(ctx.players.local().tile())) {
 			
-			if(bankBooth.inViewport()) {
+			if(bankBooth.inViewport() && !ctx.players.local().inMotion()) {
 				bankBooth.click();	
 			} else {
 				ctx.camera.turnTo(bankBooth);
