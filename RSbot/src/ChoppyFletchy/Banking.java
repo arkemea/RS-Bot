@@ -23,14 +23,11 @@ public class Banking extends Task<ClientContext> {
 		
 		ChopnFletch.status = "Banking";
 		
-		PathFinder mPF = new PathFinder(ctx);
-		mPF.moveToExact(ChopnFletch.bankToBank.getBankArea().getRandomTile());
-		
+		PathFinder mPF 			= new PathFinder(ctx);
+		GameObject bankBooth 	= ctx.objects.select().id(ChopnFletch.bankToBank.getBankBoothId()).nearest().peek();
 		System.out.println(ChopnFletch.bankToBank.getBankArea().contains(ctx.players.local().tile()));
 		
 		if(ChopnFletch.bankToBank.getBankArea().contains(ctx.players.local().tile())) {
-			
-			GameObject bankBooth = ctx.objects.select().id(ChopnFletch.bankToBank.getBankBoothId()).nearest().peek();
 			
 			if(bankBooth.inViewport()) {
 				bankBooth.click();	
@@ -51,9 +48,20 @@ public class Banking extends Task<ClientContext> {
 					}
 					return false;
 				}
-			}, 500, 4);
+			}, 50, 50);
+		} else {
 			
-		} 
+			if(bankBooth.inViewport()) {
+				if(!ctx.players.local().inMotion()) {
+					System.out.println("stepping");
+					ctx.movement.step(bankBooth);
+				}
+				
+			} else {
+				System.out.println("moving");
+				mPF.moveToClose(ChopnFletch.bankToBank.getBankArea().getRandomTile());
+			}
+		}
 	}
 	
 	

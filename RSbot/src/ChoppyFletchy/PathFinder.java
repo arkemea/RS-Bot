@@ -58,22 +58,22 @@ public class PathFinder extends Task<ClientContext> {
 			   public Boolean call() throws Exception {   
 				   PathFinder mPF = new PathFinder(ctx);
 				  
-				   if(mPF.playerDistanceTo(targetTile) < 20) {
+				   if(mPF.playerDistanceTo(targetTile) < 5) {
 					   return true;
-				   } else if(!ctx.players.local().inMotion()) {
+				   } else {
 					   ctx.movement.step(targetTile);
 				   }
 				   return false;
 			   }   
-			}, 500, 8);	
+			}, 3000, 8);	
 			
-			if(this.playerDistanceTo(targetTile) < 20) {
+			if(this.playerDistanceTo(targetTile) < 5) {
 				break;
 			}
-		}
+		}	
 		
 	}
-	public void moveToExact(Tile targetTile) {
+	public void moveToClose(Tile targetTile) {
 		
 		while(true) {
 			
@@ -89,17 +89,44 @@ public class PathFinder extends Task<ClientContext> {
 				  
 				   if(mPF.playerDistanceTo(targetTile) < 5) {
 					   return true;
-				   } else if(!ctx.players.local().inMotion()) {
+				   } else {
 					   ctx.movement.step(targetTile);
 				   }
 				   return false;
 			   }   
-			}, 500, 8);	
+			}, 3000, 8);	
 			
 			if(this.playerDistanceTo(targetTile) < 5) {
 				break;
 			}
 		}	
+	}
+	public void moveToExact(Tile targetTile) {
+		while(true) {
+					
+			if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
+				ctx.movement.running(true);
+			}
+			
+			Condition.wait(new Callable<Boolean>() {
+				 
+			   @Override
+			   public Boolean call() throws Exception {   
+				   PathFinder mPF = new PathFinder(ctx);
+				  
+				   if(mPF.playerDistanceTo(targetTile) < 5) {
+					   return true;
+				   } else {
+					   ctx.movement.step(targetTile);
+				   }
+				   return false;
+			   }   
+			}, 3000, 8);	
+			
+			if(this.playerDistanceTo(targetTile) < 5) {
+				break;
+			}
+		}
 	}
 }
 

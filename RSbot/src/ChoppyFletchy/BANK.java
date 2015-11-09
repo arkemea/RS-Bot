@@ -5,7 +5,8 @@ import org.powerbot.script.Tile;
 
 public enum BANK {
 	DEFAULT(new Area(new Tile(0,0), new Tile(0,0)), 0, null),
-	DRAYNOR(new Area(new Tile(0,0), new Tile(0,0)), 11744, null),
+	DRAYNOR(new Area(new Tile(3091,3243), new Tile(3094,3245)), 11744, SPOTS.DRAYNOR),
+	GRANDEXCHANGE(new Area(new Tile(3167,3488), new Tile(3168,3491)), 10060, SPOTS.GRANDEXCHANGE),
 	VARROCKEAST(new Area(new Tile(0,0), new Tile(0,0)), 0, null),
 	SEERSVILLAGE(new Area(new Tile(2723,3496), new Tile(2727,3491)), 25808, SPOTS.SEERSVILLAGE);
 	

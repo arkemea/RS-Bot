@@ -17,6 +17,8 @@ public class Drop extends Task<ClientContext> {
 	@Override
 	public void execute() {
 		
+		ChopnFletch.status = "Dropping";
+		
 		if(ChopnFletch.powerCut && ChopnFletch.fletch != 0) {
 			dropBows();
 			dropWrongLogs();

@@ -27,7 +27,7 @@ public class Gui extends JFrame implements ActionListener {
    
    private ClientContext ctx;
    
-   private String[] bankChoices = {"Draynor", "Seers Village"},
+   private String[] bankChoices = {"Draynor", "Seers Village", "The Grand Exchange"},
 		   			treeChoices = {"Normal", "Oak", "Willow", "Maple", "Yew", "Magic"}, 
 		   			fletchChoices = {"Dont Fletch", "Arrows", "Shortbows", "Longbows"};
 		   
@@ -89,6 +89,10 @@ public class Gui extends JFrame implements ActionListener {
 			ChopnFletch.bankToBank 	= BANK.SEERSVILLAGE;
 			ChopnFletch.anchor		= BANK.SEERSVILLAGE.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
 			break;
+		case "The Grand Exchange":
+			ChopnFletch.bankToBank	= BANK.GRANDEXCHANGE;
+			ChopnFletch.anchor		= BANK.GRANDEXCHANGE.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
+			break;
 		default:
 			break;
 		}
@@ -124,7 +128,6 @@ public class Gui extends JFrame implements ActionListener {
 	  bankChoice = new JComboBox(bankChoices);
 	  bankChoice.setBounds(10, 30, 100, 30);
 	  bankChoice.setSelectedIndex(0);
-	  bankChoice.addActionListener(this);
       contentPane.add(bankChoice);
       
       powercuttingChoice = new JRadioButton("Powercutting");
@@ -139,7 +142,6 @@ public class Gui extends JFrame implements ActionListener {
 	  treeChoice = new JComboBox(treeChoices);
 	  treeChoice.setBounds(10, 85, 100, 30);
 	  treeChoice.setSelectedIndex(0);
-	  treeChoice.addActionListener(this);
       contentPane.add(treeChoice);
   
 	  JLabel fletchLabel = new JLabel("Fletch");
@@ -148,12 +150,18 @@ public class Gui extends JFrame implements ActionListener {
 	  
 	  fletchChoice = new JComboBox(fletchChoices);
 	  fletchChoice.setBounds(10, 140, 100, 30);
-	  fletchChoice.addActionListener(this);
 	  contentPane.add(fletchChoice);
 	  
 	  startButton = new Button("Start bot");
 	  startButton.setBounds(10, 180, 70, 30);
-	  startButton.addActionListener(this);
+	  
+	  startButton.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			onStart();	
+		}
+	  });
+	  
 	  contentPane.add(startButton);
 	 
 
