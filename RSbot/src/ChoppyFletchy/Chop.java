@@ -28,13 +28,15 @@ public class Chop extends Task<ClientContext>{
 		
 		GameObject tree 		= ctx.objects.select().id(ChopnFletch.treeToChop).nearest().poll();
 		PathFinder mPF			= new PathFinder(ctx);
+		int distanceFromAnchor	= ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getDistanceFromAnchor();
+		int distancetoAnchor	= ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getDistanceToAnchor();
 		
-		if(mPF.playerDistanceTo(ChopnFletch.anchor) > 50) {
-			
+		System.out.println(mPF.playerDistanceTo(tree.tile()) + " " + mPF.distanceBetween(ChopnFletch.anchor, tree.tile()));
+		
+		if(mPF.playerDistanceTo(ChopnFletch.anchor) > distanceFromAnchor) {
 			mPF.moveToExact(ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getTilePath());
-			
-		} else if(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) > 50) {
-			
+		
+		} else if(mPF.distanceBetween(ChopnFletch.anchor, tree.tile()) > distancetoAnchor) {
 			mPF.moveToClose(ChopnFletch.anchor);
 			
 			Condition.wait(new Callable<Boolean>() {
@@ -43,7 +45,7 @@ public class Chop extends Task<ClientContext>{
 				public Boolean call() throws Exception {
 					GameObject tree 	= ctx.objects.select().id(ChopnFletch.treeToChop).nearest().poll();
 					
-					if(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) > 50) {
+					if(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) > distancetoAnchor) {
 						System.out.println(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) +" no tree");
 						ChopnFletch.status = "No trees";
 						return false;
@@ -54,7 +56,7 @@ public class Chop extends Task<ClientContext>{
 			}, 500, 50);
 			
 		} else {
-
+			
 			if(ctx.players.local().inMotion()) {
 				ChopnFletch.status = "Moving to tree";
 
@@ -62,8 +64,7 @@ public class Chop extends Task<ClientContext>{
 				ChopnFletch.status = "Chopping";
 			}
 			
-			if(ctx.players.local().animation() == -1 && ctx.players.local().inMotion() == false) {
-				
+			if(ctx.players.local().animation() == -1 && !ctx.players.local().inMotion()) {
 				List<GroundItem> drops = ctx.groundItems.get();
 				
 				for(GroundItem i: drops) {
@@ -95,8 +96,8 @@ public class Chop extends Task<ClientContext>{
 					ctx.camera.turnTo(tree);
 					clickCounter = 0;
 				}
-				ctx.camera.pitch(true);
-			} 	
+				ctx.camera.pitch(true);	
+			}	
 		}
 	}
 }

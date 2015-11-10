@@ -35,25 +35,28 @@ public class Banking extends Task<ClientContext> {
 			
 			if(bankBooth.inViewport() && !ctx.players.local().inMotion()) {
 				bankBooth.click();	
+				
+				Condition.wait(new Callable<Boolean>() {
+					 
+					@Override
+					public Boolean call() throws Exception {
+						if(ctx.bank.opened()) {
+							System.out.println("Bankerino " + ChopnFletch.fletch);
+							bankAllBows();
+							bankAllLogs();
+							bankAllNests();
+							ctx.bank.close();
+							return true;
+						}
+						return false;
+					}
+				}, 50, 50);
+				
 			} else {
 				ctx.camera.turnTo(bankBooth);
 			}
 			
-			Condition.wait(new Callable<Boolean>() {
-				 
-				@Override
-				public Boolean call() throws Exception {
-					if(ctx.bank.opened()) {
-						System.out.println("Bankerino " + ChopnFletch.fletch);
-						bankAllBows();
-						bankAllLogs();
-						bankAllNests();
-						ctx.bank.close();
-						return true;
-					}
-					return false;
-				}
-			}, 50, 50);
+			
 		} else {
 			
 			if(bankBooth.inViewport()) {

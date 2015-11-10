@@ -35,7 +35,7 @@ public class PathFinder extends Task<ClientContext> {
 		
 		return 
 				Math.sqrt(
-				Math.pow( Math.abs(ctx.players.local().tile().x()-targetTile.x()), 2) *
+				Math.pow( Math.abs(ctx.players.local().tile().x()-targetTile.x()), 2) +
 				Math.pow( Math.abs(ctx.players.local().tile().y()-targetTile.y()), 2)
 				);
 	}
@@ -43,7 +43,7 @@ public class PathFinder extends Task<ClientContext> {
 	public double distanceBetween(Tile t1, Tile t2) {
 		return 
 				Math.sqrt(
-				Math.pow( Math.abs(t1.x()-t2.x()), 2) *
+				Math.pow( Math.abs(t1.x()-t2.x()), 2) +
 				Math.pow( Math.abs(t1.y()-t2.y()), 2)
 				);
 	}
@@ -108,8 +108,20 @@ public class PathFinder extends Task<ClientContext> {
 	public void moveToExact(Tile[] path) {
 		
 		System.out.println( new Path(path).toString());
+		int closestTile = 0;
+		Tile highScore = new Tile(0,0);
 		
-		for(int i = 0; i < path.length; i++ ) {
+		for(int i = 0; i < path.length; i++) {
+			if(this.playerDistanceTo(highScore) > this.playerDistanceTo(path[i])) {
+				highScore = path[i];
+				closestTile = i;
+			}
+		}
+		
+		for(int i = closestTile; i < path.length; i++ ) {
+			
+			System.out.println(path[i].x() + "," + path[i].y());
+			
 			while(true) {
 				if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
 					ctx.movement.running(true);
@@ -133,6 +145,7 @@ public class PathFinder extends Task<ClientContext> {
 				}, 200, 50);
 				
 				if(this.playerDistanceTo(path[i]) < 5) {
+					System.out.println("Next point");
 					break;
 				}
 			}
