@@ -1,4 +1,4 @@
-package ChoppyFletchy;
+package ChopnFletch;
 
 public enum BOW {
 	  OAKSHORT(54),

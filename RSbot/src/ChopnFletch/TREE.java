@@ -1,4 +1,4 @@
-package ChoppyFletchy;
+package ChopnFletch;
 
 public enum TREE {
 	NORMAL(1276,1278),

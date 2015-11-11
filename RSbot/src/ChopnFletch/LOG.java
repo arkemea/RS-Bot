@@ -1,4 +1,4 @@
-package ChoppyFletchy;
+package ChopnFletch;
 
 public enum LOG {
 	  NORMAL(1511),

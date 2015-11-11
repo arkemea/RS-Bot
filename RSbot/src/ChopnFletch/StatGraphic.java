@@ -1,4 +1,4 @@
-package ChoppyFletchy;
+package ChopnFletch;
 
 import java.awt.Color;
 import java.awt.Font;

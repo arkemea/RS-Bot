@@ -1,4 +1,4 @@
-package ChoppyFletchy;
+package ChopnFletch;
 
 import java.util.Arrays;
 import java.util.Collections;

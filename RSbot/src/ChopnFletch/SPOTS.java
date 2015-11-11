@@ -1,4 +1,4 @@
-package ChoppyFletchy;
+package ChopnFletch;
 
 import org.powerbot.script.Tile;
 
