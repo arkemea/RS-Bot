@@ -16,7 +16,7 @@ import org.powerbot.script.rt4.ClientContext;
 
 
  
-public class Gui extends JFrame implements ActionListener {
+public class Gui extends JFrame {
 	
    private static final long serialVersionUID = 494368510764413341L;
 	
@@ -27,7 +27,7 @@ public class Gui extends JFrame implements ActionListener {
    
    private ClientContext ctx;
    
-   private String[] bankChoices = {"Draynor", "Seers Village", "The Grand Exchange", "Varrock East"},
+   private String[] bankChoices = {"Draynor", "Seers Village", "The Grand Exchange", "Varrock East", "Catherby"},
 		   			treeChoices = {"Normal", "Oak", "Willow", "Maple", "Yew", "Magic"}, 
 		   			fletchChoices = {"Dont Fletch", "Arrows", "Shortbows", "Longbows"};
 		   
@@ -102,6 +102,9 @@ public class Gui extends JFrame implements ActionListener {
 		case "Varrock East":
 			ChopnFletch.bankToBank	= BANK.VARROCKEAST;
 			ChopnFletch.anchor		= BANK.VARROCKEAST.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
+		case "Catherby":
+			ChopnFletch.bankToBank	= BANK.CATHERBY;
+			ChopnFletch.anchor		= BANK.CATHERBY.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
 		default:
 			break;
 		}
@@ -141,7 +144,6 @@ public class Gui extends JFrame implements ActionListener {
       
       powercuttingChoice = new JRadioButton("Powercutting");
       powercuttingChoice.setBounds(110, 35, 100, 20);
-      powercuttingChoice.addActionListener(this);
       contentPane.add(powercuttingChoice);
       
       JLabel treeLabel = new JLabel("Tree");
@@ -164,24 +166,9 @@ public class Gui extends JFrame implements ActionListener {
 	  startButton = new Button("Start bot");
 	  startButton.setBounds(10, 180, 70, 30);
 	  
-	  startButton.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			onStart();	
-		}
-	  });
+	  startButton.addActionListener((ActionEvent aE) -> onStart());
 	  
 	  contentPane.add(startButton);
-	 
-
-   } 
-
-   @Override
-   public void actionPerformed(ActionEvent evt) {
-	   
-	   if(evt.getSource().equals(startButton)) {   
-		   onStart();	   
-	   }
 	   
    }  
 }

@@ -68,7 +68,7 @@ public class StatGraphic extends Task<ClientContext> {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (java.lang.IllegalArgumentException IAe) {
-			System.out.println("hehe");
+			System.out.println(IAe.getMessage());
 		}
 		g.setFont(new Font("arial Regular", 1, 12));
 		

@@ -29,27 +29,21 @@ public class Banking extends Task<ClientContext> {
 		
 		PathFinder mPF 			= new PathFinder(ctx);
 		GameObject bankBooth 	= ctx.objects.select().id(ChopnFletch.bankToBank.getBankBoothId()).nearest().peek();
-		System.out.println(ChopnFletch.bankToBank.getBankArea().contains(ctx.players.local().tile()));
 		
 		if(ChopnFletch.bankToBank.getBankArea().contains(ctx.players.local().tile())) {
 			
 			if(bankBooth.inViewport() && !ctx.players.local().inMotion()) {
 				bankBooth.click();	
 				
-				Condition.wait(new Callable<Boolean>() {
-					 
-					@Override
-					public Boolean call() throws Exception {
-						if(ctx.bank.opened()) {
-							System.out.println("Bankerino " + ChopnFletch.fletch);
-							bankAllBows();
-							bankAllLogs();
-							bankAllNests();
-							ctx.bank.close();
-							return true;
-						}
-						return false;
+				Condition.wait(() -> {
+					if(ctx.bank.opened()) {
+						bankAllBows();
+						bankAllLogs();
+						bankAllNests();
+						ctx.bank.close();
+						return true;
 					}
+					return false;
 				}, 50, 50);
 				
 			} else {
@@ -61,18 +55,15 @@ public class Banking extends Task<ClientContext> {
 			
 			if(bankBooth.inViewport()) {
 				if(!ctx.players.local().inMotion()) {
-					System.out.println("stepping");
 					ctx.movement.step(bankBooth);
 				}
 				
 			} else if(mPF.playerDistanceTo(bankBooth.tile()) > 20) {
-				System.out.println("moving");
-				mPF.moveToExact(ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getReverseTilePath());
+				mPF.moveTo(ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getReverseTilePath());
 				
 			} else {
-				System.out.println("moving close");
 				ctx.camera.turnTo(bankBooth);
-				mPF.moveToClose(ChopnFletch.bankToBank.getBankArea().getRandomTile());
+				mPF.moveTo(ChopnFletch.bankToBank.getBankArea().getRandomTile());
 			}
 		}
 	}

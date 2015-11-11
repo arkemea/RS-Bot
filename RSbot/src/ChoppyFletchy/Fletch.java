@@ -119,8 +119,9 @@ public class Fletch extends Task<ClientContext> {
 		
 		while(true) {
 			
-			Item knife 	= ctx.inventory.select().id(knifeId).poll();
-			Item log 	= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+			Item knife 					= ctx.inventory.select().id(knifeId).poll();
+			Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+			Component shortbowComponent = ctx.widgets.widget(304).component(8);
 			
 			if (!log.valid()) {
 				break;
@@ -130,64 +131,54 @@ public class Fletch extends Task<ClientContext> {
 			
 				ChopnFletch.status = "Fletching";
 				
-				if(!ctx.widgets.widget(304).component(8).valid()) {
+				if(!shortbowComponent.valid()) {
 					knife.interact("Use");
 					log.interact("use");
 				}
 					
 			}
 			
-			Condition.wait(new Callable<Boolean>() {
-				 
-				@Override
-				public Boolean call() throws Exception {
-					Component shortbowComponent = ctx.widgets.widget(304).component(8);
-					if(shortbowComponent.valid()) {
-						shortbowComponent.interact(false, "Make 10");
-						return true;
-					}
-					
-					return false;
+			Condition.wait(() -> {
+				if(shortbowComponent.valid()) {
+					shortbowComponent.interact(false, "make 10");
+					return true;
 				}
-			}, 500, 4);	
-					
+				return false;
+			},500, 4);			
 		}
 	}
 	
 	public void fletchLongbow() {
+
 		
 		while(true) {
-					
-					Item knife 	= ctx.inventory.select().id(knifeId).poll();
-					Item log 	= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
-					
-					if (!log.valid()) {
-						break;
-					}
-					
-					if(ctx.players.local().animation() == -1) {
-					
-						ChopnFletch.status = "Fletching";
-				
-					if(!ctx.widgets.widget(304).component(8).valid()) {
-						knife.interact("Use");
-						log.interact("use");
-					}	
+			
+			Item knife 					= ctx.inventory.select().id(knifeId).poll();
+			Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+			Component longbowComponent 	= ctx.widgets.widget(304).component(10);
+			
+			if (!log.valid()) {
+				break;
 			}
 			
-			Condition.wait(new Callable<Boolean>() {
-				 
-				@Override
-				public Boolean call() throws Exception {
-					Component shortbowComponent = ctx.widgets.widget(304).component(10);
-					if(shortbowComponent.valid()) {
-						shortbowComponent.interact(false, "Make 10");
-						return true;
-					}
-					
-					return false;
+			if(ctx.players.local().animation() == -1) {
+			
+				ChopnFletch.status = "Fletching";
+				
+				if(!longbowComponent.valid()) {
+					knife.interact("Use");
+					log.interact("use");
 				}
-			}, 500, 4);
+					
+			}
+			
+			Condition.wait(() -> {
+				if(longbowComponent.valid()) {
+					longbowComponent.interact(false, "make 10");
+					return true;
+				}
+				return false;
+			},500, 4);			
 		}
 	}
 }

@@ -48,56 +48,22 @@ public class PathFinder extends Task<ClientContext> {
 				);
 	}
 	
-	public void moveToClose(Tile targetTile) {
-		
-		while(true) {
-			
-			if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
-				ctx.movement.running(true);
-			}
-			
-			Condition.wait(new Callable<Boolean>() {
-				 
-			   @Override
-			   public Boolean call() throws Exception {   
-				   PathFinder mPF = new PathFinder(ctx);
-				  
-				   if(mPF.playerDistanceTo(targetTile) < 5) {
-					   return true;
-				   } else {
-					   ctx.movement.step(targetTile);
-				   }
-				   return false;
-			   }   
-			}, 3000, 8);	
-			
-			if(this.playerDistanceTo(targetTile) < 5) {
-				break;
-			}
-		}	
-	}
-	public void moveToExact(Tile targetTile) {
+	
+	public void moveTo(Tile targetTile) {
 		while(true) {
 					
 			if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
 				ctx.movement.running(true);
 			}
 			
-	
-			Condition.wait(new Callable<Boolean>() {
-				 
-			   @Override
-			   public Boolean call() throws Exception {   
-				   PathFinder mPF = new PathFinder(ctx);
-				  
-				   if(mPF.playerDistanceTo(targetTile) < 5) {
-					   return true;
-				   } else {
-					   ctx.movement.step(targetTile);
-				   }
-				   return false;
-			   }   
-			}, 3000, 8);
+			Condition.wait(() -> {
+				if(this.playerDistanceTo(targetTile) < 5) {
+					return true;
+				} else {
+					ctx.movement.step(targetTile);
+				}
+				return false;
+			},3000,8);
 			
 			if(this.playerDistanceTo(targetTile) < 5) {
 				break;
@@ -105,9 +71,8 @@ public class PathFinder extends Task<ClientContext> {
 		}
 	}
 	
-	public void moveToExact(Tile[] path) {
+	public void moveTo(Tile[] path) {
 		
-		System.out.println( new Path(path).toString());
 		int closestTile = 0;
 		Tile highScore = new Tile(0,0);
 		
@@ -120,32 +85,23 @@ public class PathFinder extends Task<ClientContext> {
 		
 		for(int i = closestTile; i < path.length; i++ ) {
 			
-			System.out.println(path[i].x() + "," + path[i].y());
-			
-			while(true) {
+				while(true) {
 				if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
 					ctx.movement.running(true);
 				}
 				
 				final int index = i;
-		
-				Condition.wait(new Callable<Boolean>() {
-					 
-				   @Override
-				   public Boolean call() throws Exception {   
-					   PathFinder mPF = new PathFinder(ctx);
-					  
-					if(mPF.playerDistanceTo(path[index]) < 5) {
-						   return true;
-					   } else if(!ctx.players.local().inMotion()) {
-						   ctx.movement.step(path[index]);
-					   }
-					   return false;
-				   }   
+				
+				Condition.wait(() -> {
+					if(this.playerDistanceTo(path[index]) < 5) {
+						return true;
+					} else if(!ctx.players.local().inMotion()) {
+						ctx.movement.step(path[index]);
+					}
+					return false;
 				}, 200, 50);
 				
 				if(this.playerDistanceTo(path[i]) < 5) {
-					System.out.println("Next point");
 					break;
 				}
 			}

@@ -31,14 +31,12 @@ public class Chop extends Task<ClientContext>{
 		int distanceFromAnchor	= ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getDistanceFromAnchor();
 		int distancetoAnchor	= ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getDistanceToAnchor();
 		
-		System.out.println(mPF.playerDistanceTo(tree.tile()) + " " + mPF.distanceBetween(ChopnFletch.anchor, tree.tile()));
-		
 		if(mPF.playerDistanceTo(ChopnFletch.anchor) > distanceFromAnchor) {
-			mPF.moveToExact(ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getTilePath());
+			mPF.moveTo(ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getTilePath());
 			
 			
 		} else if(mPF.distanceBetween(ChopnFletch.anchor, tree.tile()) > distancetoAnchor) {
-			mPF.moveToClose(ChopnFletch.anchor);
+			mPF.moveTo(ChopnFletch.anchor);
 			
 			Condition.wait(new Callable<Boolean>() {
 				 
@@ -47,11 +45,9 @@ public class Chop extends Task<ClientContext>{
 					GameObject tree 	= ctx.objects.select().id(ChopnFletch.treeToChop).nearest().poll();
 					
 					if(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) > distancetoAnchor) {
-						System.out.println(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) +" no tree");
 						ChopnFletch.status = "No trees";
 						return false;
 					}
-					System.out.println("many tree");
 					return true;
 				}
 			}, 500, 50);
