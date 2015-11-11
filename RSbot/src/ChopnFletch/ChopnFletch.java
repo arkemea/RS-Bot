@@ -13,7 +13,7 @@ import org.powerbot.script.Script;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
-@Script.Manifest(name = "ArkChopnFletch", description = "Chops any log with fletching and banking support")
+@Script.Manifest(name = "ArkChopnFletch", description = "Chops any log with fletching, banking and powercutting support")
 
 public class ChopnFletch extends PollingScript<ClientContext> implements MessageListener, PaintListener  {
 	
