@@ -48,6 +48,8 @@ public class Fletch extends Task<ClientContext> {
 	}
 	
 	public void cutArrowShaft() {
+		Component arrowShaftComponent = ctx.widgets.widget(305).component(9);
+		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
 		while(true) {
 			
@@ -59,29 +61,46 @@ public class Fletch extends Task<ClientContext> {
 				break;
 			}
 			
-			if(ctx.players.local().animation() == -1) {
+			ChopnFletch.status = "Fletching";
 			
-				ChopnFletch.status = "Fletching";
-				
-				knife.interact("Use");
-				log.interact("Use");	
-			}
-			
-			for(int i = 0; i < 4; i++) {
-				Component arrowShaftComponent = ctx.widgets.widget(305).component(9);
-				
-				if(arrowShaftComponent.valid()) {
-					arrowShaftComponent.interact(false, "Make 10");
-				} else {
-					try {
-						Thread.sleep(400);
-					} catch (InterruptedException e) {}	
-				}		
-			}	
+			Condition.wait(() -> {
+				 if(arrowShaftComponent.valid()) {
+					if(ctx.menu.opened()) {
+						ctx.menu.click((command) -> {
+							System.out.println(command.toString());
+							return command.toString().toLowerCase().startsWith("make x");
+						});
+						Condition.wait(() -> {
+							if(makeXComponent.visible()) {
+								ctx.input.sendln("234");
+								return true;
+							}
+							return false;
+						}, 200, 50);
+						
+						Condition.wait(()-> {
+							if(ctx.players.local().animation() == 1) {
+								return true;
+							}
+							return false;
+						},50, 50);
+						return true;
+					} else {
+						arrowShaftComponent.click(false);
+						Condition.wait(() -> ctx.menu.opened(), 50, 50);
+					}
+				} else if(ctx.players.local().animation() == -1) {
+					knife.interact("Use");
+					log.interact("use");
+				}
+				return false;
+			},200, 50);		
 		}			
 	}
 	
 	public void makeHeadlessArrow() {
+		Component makeHeadlessArrow = ctx.widgets.widget(582).component(5);
+		
 		while(true) {
 			Item feather 	= ctx.inventory.select().id(featherId).poll();
 			Item arrowShaft = ctx.inventory.select().id(arrowShaftId).poll();
@@ -89,96 +108,123 @@ public class Fletch extends Task<ClientContext> {
 			if (!feather.valid() || !arrowShaft.valid()) {
 				break;
 			}
+
 			
-			feather.interact("Use");
-			arrowShaft.interact("use");
-			
-			for(int i = 0; i < 4; i++) {
-				Component makeHeadlessArrow = ctx.widgets.widget(582).component(5);
+			Condition.wait(() -> {
 				
 				if(makeHeadlessArrow.valid()) {
-					makeHeadlessArrow.interact(false, "Make 10 sets");
-					
+					makeHeadlessArrow.interact(false, "make 10 sets");
 					ChopnFletch.status = "Fletching";
-					
-					try {
-						Thread.sleep(13000);
-					} catch (InterruptedException e) {}	
-					
-					break;
+					return true;
 				} else {
-					try {
-						Thread.sleep(400);
-					} catch (InterruptedException e) {}	
-				}		
-			}
+					feather.interact("Use");
+					arrowShaft.interact("use");
+				}
+				
+				return false;
+			}, 50, 50);
+			
+			Condition.sleep(10000);
+			
 		}
 	}
 	
 	public void fletchShortbow() {
+		Component shortbowComponent = ctx.widgets.widget(304).component(8);
+		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
 		while(true) {
 			
 			Item knife 					= ctx.inventory.select().id(knifeId).poll();
 			Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
-			Component shortbowComponent = ctx.widgets.widget(304).component(8);
 			
 			if (!log.valid()) {
 				break;
 			}
-			
-			if(ctx.players.local().animation() == -1) {
-			
-				ChopnFletch.status = "Fletching";
-				
-				if(!shortbowComponent.valid()) {
+			ChopnFletch.status = "Fletching";
+		
+			Condition.wait(() -> {
+				 if(shortbowComponent.valid()) {
+					if(ctx.menu.opened()) {
+						ctx.menu.click((command) -> {
+							System.out.println(command.toString());
+							return command.toString().toLowerCase().startsWith("make x");
+						});
+						Condition.wait(() -> {
+							if(makeXComponent.visible()) {
+								ctx.input.sendln("234");
+								return true;
+							}
+							return false;
+						}, 200, 50);
+						
+						Condition.wait(()-> {
+							if(ctx.players.local().animation() == 1) {
+								return true;
+							}
+							return false;
+						},50, 50);
+						return true;
+					} else {
+						shortbowComponent.click(false);
+						Condition.wait(() -> ctx.menu.opened(), 50, 50);
+					}
+				} else if(ctx.players.local().animation() == -1) {
 					knife.interact("Use");
 					log.interact("use");
 				}
-					
-			}
-			
-			Condition.wait(() -> {
-				if(shortbowComponent.valid()) {
-					shortbowComponent.interact(false, "make 10");
-					return true;
-				}
 				return false;
-			},500, 4);			
+			},200, 50);		
 		}
 	}
 	
 	public void fletchLongbow() {
-
+		Component longbowComponent 	= ctx.widgets.widget(304).component(10);
+		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
 		while(true) {
 			
 			Item knife 					= ctx.inventory.select().id(knifeId).poll();
 			Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
-			Component longbowComponent 	= ctx.widgets.widget(304).component(10);
 			
 			if (!log.valid()) {
 				break;
 			}
 			
-			if(ctx.players.local().animation() == -1) {
-			
-				ChopnFletch.status = "Fletching";
-				
-				if(!longbowComponent.valid()) {
+			ChopnFletch.status = "Fletching";
+		
+			Condition.wait(() -> {
+				 if(longbowComponent.valid()) {
+					if(ctx.menu.opened()) {
+						ctx.menu.click((command) -> {
+							System.out.println(command.toString());
+							return command.toString().toLowerCase().startsWith("make x");
+						});
+						Condition.wait(() -> {
+							if(makeXComponent.visible()) {
+								ctx.input.sendln("234");
+								return true;
+							}
+							return false;
+						}, 200, 50);
+						
+						Condition.wait(()-> {
+							if(ctx.players.local().animation() == 1) {
+								return true;
+							}
+							return false;
+						},50, 50);
+						return true;
+					} else {
+						longbowComponent.click(false);
+						Condition.wait(() -> ctx.menu.opened(), 50, 50);
+					}
+				} else if(ctx.players.local().animation() == -1) {
 					knife.interact("Use");
 					log.interact("use");
 				}
-					
-			}
-			
-			Condition.wait(() -> {
-				if(longbowComponent.valid()) {
-					longbowComponent.interact(false, "make 10");
-					return true;
-				}
 				return false;
-			},500, 4);			
+			},200, 50);			
 		}
 	}
 }

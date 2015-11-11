@@ -27,7 +27,6 @@ public class Drop extends Task<ClientContext> {
 		} else if(!ChopnFletch.powerCut) {
 			dropWrongLogs();
 		}
-		
 	}
 	
 	public void dropLogs() {
@@ -40,10 +39,6 @@ public class Drop extends Task<ClientContext> {
 		} else {
 			dropWrongLogs();
 		}
-		
-		
-		
-		
 	}
 	
 	public void dropAllLogs() {
@@ -55,7 +50,6 @@ public class Drop extends Task<ClientContext> {
 				}
 			}
 		}
-		
 	}
 	
 	public void dropWrongLogs() {
@@ -77,7 +71,5 @@ public class Drop extends Task<ClientContext> {
 				}
 			}
 		}
-		
 	}
-
 }
