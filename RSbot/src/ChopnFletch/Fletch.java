@@ -89,7 +89,7 @@ public class Fletch extends Task<ClientContext> {
 						arrowShaftComponent.click(false);
 						Condition.wait(() -> ctx.menu.opened(), 50, 50);
 					}
-				} else if(ctx.players.local().animation() == -1) {
+				} else if(ctx.players.local().animation() == -1 && log.valid()) {
 					knife.interact("Use");
 					log.interact("use");
 				}
@@ -169,12 +169,12 @@ public class Fletch extends Task<ClientContext> {
 						shortbowComponent.click(false);
 						Condition.wait(() -> ctx.menu.opened(), 50, 50);
 					}
-				} else if(ctx.players.local().animation() == -1) {
+				} else if(ctx.players.local().animation() == -1 && log.valid()) {
 					knife.interact("Use");
 					log.interact("use");
 				}
 				return false;
-			},200, 50);		
+			},500, 50);		
 		}
 	}
 	
@@ -219,7 +219,8 @@ public class Fletch extends Task<ClientContext> {
 						longbowComponent.click(false);
 						Condition.wait(() -> ctx.menu.opened(), 50, 50);
 					}
-				} else if(ctx.players.local().animation() == -1) {
+				} else if(ctx.players.local().animation() == -1 && log.valid()) {
+					System.out.println(log.valid());
 					knife.interact("Use");
 					log.interact("use");
 				}

@@ -74,14 +74,14 @@ public enum SPOTS {
 			new Path[] {
 					null,
 					null,
-					new Path (15, 15, new Tile(2809,3440), new Tile(2790,3433), new Tile(2771,3436),  new Tile(2771,3432)),
+					new Path (15, 15, new Tile(2809,3440), new Tile(2790,3433)),
 					null,
 					new Path (15, 15, new Tile(2809,3440), new Tile(2790,3433), new Tile(2771,3436),  new Tile(2771,3432)),
 					null},
 			new Tile[] {
 					null,
 					null,
-					null,
+					new Tile(2784,3430),
 					null,
 					new Tile(2762,3430),
 					null});
