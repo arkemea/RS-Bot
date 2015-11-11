@@ -68,8 +68,23 @@ public enum SPOTS {
 					null,
 					null,
 					null,
-					new Tile(3213,3503)});
-
+					new Tile(3213,3503),
+					null}),
+	CATHERBY(
+			new Path[] {
+					null,
+					null,
+					new Path (15, 15, new Tile(2809,3440), new Tile(2790,3433), new Tile(2771,3436),  new Tile(2771,3432)),
+					null,
+					new Path (15, 15, new Tile(2809,3440), new Tile(2790,3433), new Tile(2771,3436),  new Tile(2771,3432)),
+					null},
+			new Tile[] {
+					null,
+					null,
+					null,
+					null,
+					new Tile(2762,3430),
+					null});
 	
 	private Path[] pathList;
 	private Tile[] anchor;

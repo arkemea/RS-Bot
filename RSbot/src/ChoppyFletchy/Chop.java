@@ -35,7 +35,8 @@ public class Chop extends Task<ClientContext>{
 		
 		if(mPF.playerDistanceTo(ChopnFletch.anchor) > distanceFromAnchor) {
 			mPF.moveToExact(ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getTilePath());
-		
+			
+			
 		} else if(mPF.distanceBetween(ChopnFletch.anchor, tree.tile()) > distancetoAnchor) {
 			mPF.moveToClose(ChopnFletch.anchor);
 			
