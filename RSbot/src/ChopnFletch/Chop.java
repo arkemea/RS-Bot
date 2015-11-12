@@ -1,6 +1,5 @@
 package ChopnFletch;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -8,7 +7,6 @@ import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 import org.powerbot.script.rt4.GroundItem;
-import org.powerbot.script.rt4.GroundItems;
 
 public class Chop extends Task<ClientContext>{
 	private int clickCounter	= 0;

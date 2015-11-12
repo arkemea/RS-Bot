@@ -1,14 +1,9 @@
 package ChopnFletch;
 
-import java.util.concurrent.Callable;
-
 import org.powerbot.script.Condition;
-import org.powerbot.script.Filter;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Component;
 import org.powerbot.script.rt4.Item;
-import org.powerbot.script.rt4.Menu;
-import org.powerbot.script.rt4.Menu.Command;
 
 public class Fletch extends Task<ClientContext> {
 	private int knifeId 		= 946;

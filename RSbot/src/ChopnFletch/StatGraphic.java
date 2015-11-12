@@ -190,7 +190,6 @@ public class StatGraphic extends Task<ClientContext> {
 	}
 	
 	public int getPercentIntoNextLevel(int skillID) {
-		int currentLevel = ctx.skills.level(skillID);
 		
 		double xpIntoLevel = ctx.skills.experience(skillID)-xpTable[ctx.skills.level(skillID)];
 		double xpTotalLevel = (xpTable[ctx.skills.level(skillID)+1])-xpTable[ctx.skills.level(skillID)];
