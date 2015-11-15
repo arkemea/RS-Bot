@@ -1,10 +1,18 @@
-package ChopnFletch;
+package ChopnFletch.Tasks;
 
+
+import java.util.concurrent.Callable;
 
 import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.Bank;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
+
+import ArkMotherload.MineArea;
+import ChopnFletch.ChopnFletch;
+import ChopnFletch.Enums.BOW;
+import ChopnFletch.Enums.LOG;
+import ChopnFletch.Enums.NEST;
 
 public class Banking extends Task<ClientContext> {
 
@@ -30,16 +38,19 @@ public class Banking extends Task<ClientContext> {
 			if(bankBooth.inViewport() && !ctx.players.local().inMotion()) {
 				bankBooth.click();	
 				
-				Condition.wait(() -> {
-					if(ctx.bank.opened()) {
-						bankAllBows();
-						bankAllLogs();
-						bankAllNests();
-						ctx.bank.close();
-						return true;
+				Condition.wait(new Callable<Boolean>() {
+					@Override
+					public Boolean call() throws Exception {
+						if(ctx.bank.opened()) {
+							bankAllBows();
+							bankAllLogs();
+							bankAllNests();
+							ctx.bank.close();
+							return true;
+						}
+						return false;
 					}
-					return false;
-				}, 50, 50);
+				}, 250, 8);
 				
 			} else {
 				ctx.camera.turnTo(bankBooth);

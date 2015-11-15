@@ -14,6 +14,10 @@ import javax.swing.border.EmptyBorder;
 
 import org.powerbot.script.rt4.ClientContext;
 
+import ChopnFletch.Enums.BANK;
+import ChopnFletch.Enums.LOG;
+import ChopnFletch.Enums.TREE;
+
 
  
 public class Gui extends JFrame {
@@ -21,7 +25,7 @@ public class Gui extends JFrame {
    private static final long serialVersionUID = 494368510764413341L;
 	
    private JPanel contentPane;
-   private JComboBox<String> bankChoice, treeChoice, fletchChoice;
+   private JComboBox bankChoice, treeChoice, fletchChoice;
    private JRadioButton powercuttingChoice; 
    private Button startButton;
    
@@ -120,9 +124,9 @@ public class Gui extends JFrame {
    }
    
    
-   public Gui (ClientContext ctx2) {
+   public Gui (ClientContext ctx) {
 	   
-	  this.ctx = ctx2;
+	  this.ctx = ctx;
 	  
 	  setResizable(false);
 	  setTitle("ChopnFletcher");
@@ -166,7 +170,13 @@ public class Gui extends JFrame {
 	  startButton = new Button("Start bot");
 	  startButton.setBounds(10, 180, 70, 30);
 	  
-	  startButton.addActionListener((ActionEvent aE) -> onStart());
+	  startButton.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			onStart();
+		}
+	  });
 	  
 	  contentPane.add(startButton);
 	   

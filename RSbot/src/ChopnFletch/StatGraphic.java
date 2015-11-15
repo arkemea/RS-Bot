@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 
 import org.powerbot.script.rt4.ClientContext;
 
+import ChopnFletch.Tasks.Task;
+
 
 public class StatGraphic extends Task<ClientContext> {
 	

@@ -1,4 +1,7 @@
-package ChopnFletch;
+package ChopnFletch.Tasks;
+
+
+import java.util.concurrent.Callable;
 
 import org.powerbot.script.Condition;
 import org.powerbot.script.Tile;
@@ -51,14 +54,22 @@ public class PathFinder extends Task<ClientContext> {
 				ctx.movement.running(true);
 			}
 			
-			Condition.wait(() -> {
-				if(this.playerDistanceTo(targetTile) < 5) {
-					return true;
-				} else {
-					ctx.movement.step(targetTile);
+			Condition.wait(new Callable<Boolean>() {
+
+				@Override
+				public Boolean call() throws Exception {
+					
+					PathFinder mPF = new PathFinder(ctx);
+					
+					if(mPF.playerDistanceTo(targetTile) < 5) {
+						return true;
+					} else {
+						ctx.movement.step(targetTile);
+					}
+					return false;
 				}
-				return false;
-			},3000,8);
+				
+			}, 3000, 8);
 			
 			if(this.playerDistanceTo(targetTile) < 5) {
 				break;
@@ -87,14 +98,23 @@ public class PathFinder extends Task<ClientContext> {
 				
 				final int index = i;
 				
-				Condition.wait(() -> {
-					if(this.playerDistanceTo(path[index]) < 5) {
-						return true;
-					} else if(!ctx.players.local().inMotion()) {
-						ctx.movement.step(path[index]);
+				Condition.wait(new Callable<Boolean>() {
+
+					@Override
+					public Boolean call() throws Exception {
+						
+						PathFinder mPF = new PathFinder(ctx);
+						
+						if(mPF.playerDistanceTo(path[index]) < 5) {
+							return true;
+						} else if(!ctx.players.local().inMotion()) {
+							ctx.movement.step(path[index]);
+						}
+						return false;
 					}
-					return false;
+					
 				}, 200, 50);
+
 				
 				if(this.playerDistanceTo(path[i]) < 5) {
 					break;

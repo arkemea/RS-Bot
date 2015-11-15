@@ -1,4 +1,4 @@
-package ChopnFletch;
+package ChopnFletch.Enums;
 
 public enum BOW {
 	  OAKSHORT(54),

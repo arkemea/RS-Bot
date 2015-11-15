@@ -13,6 +13,15 @@ import org.powerbot.script.Script;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
+import ChopnFletch.Enums.BANK;
+import ChopnFletch.Enums.LOG;
+import ChopnFletch.Enums.TREE;
+import ChopnFletch.Tasks.Banking;
+import ChopnFletch.Tasks.Chop;
+import ChopnFletch.Tasks.Drop;
+import ChopnFletch.Tasks.Fletch;
+import ChopnFletch.Tasks.Task;
+
 @Script.Manifest(name = "ArkChopnFletch", description = "Chops any log with fletching, banking and powercutting support")
 
 public class ChopnFletch extends PollingScript<ClientContext> implements MessageListener, PaintListener  {
@@ -22,7 +31,7 @@ public class ChopnFletch extends PollingScript<ClientContext> implements Message
 	private long startTime				= System.currentTimeMillis();
 	
 	public StatGraphic mGraphic			= new StatGraphic(ctx, startTime);
-	static String status				= "Starting bot";
+	public static String status				= "Starting bot";
 	
 	public static Tile anchor 			= new Tile(2726,3481);
 	public static int logToCut 			= LOG.MAPLE.getLogId();
@@ -39,12 +48,15 @@ public class ChopnFletch extends PollingScript<ClientContext> implements Message
 	public void start() {
 		
 		Gui settings = new Gui(ctx);
+		
+		Thread mLootSearcher = new Thread(new LootSearcher(2000,ctx));
 		settings.setVisible(true);
 		
 		while(!startScript) {
 			Condition.sleep(100);
 		}
 		status = "Bot started";
+		mLootSearcher.start();
 
 		
 		if(powerCut && fletch == 0) {

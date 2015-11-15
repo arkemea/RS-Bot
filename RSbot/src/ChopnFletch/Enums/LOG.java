@@ -1,4 +1,4 @@
-package ChopnFletch;
+package ChopnFletch.Enums;
 
 public enum LOG {
 	  NORMAL(1511),

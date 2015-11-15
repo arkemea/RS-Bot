@@ -1,6 +1,8 @@
-package ChopnFletch;
+package ChopnFletch.Enums;
 
 import org.powerbot.script.Tile;
+
+import ChopnFletch.Path;
 
 public enum SPOTS {
 	

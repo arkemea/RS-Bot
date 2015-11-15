@@ -1,4 +1,4 @@
-package ChopnFletch;
+package ChopnFletch.Enums;
 
 import org.powerbot.script.Area;
 import org.powerbot.script.Tile;

@@ -1,9 +1,14 @@
-package ChopnFletch;
+package ChopnFletch.Tasks;
 
-import org.powerbot.script.Condition;
+import java.util.concurrent.Callable;
+
+import org.powerbot.script.*;
+import org.powerbot.script.ClientAccessor;
+import org.powerbot.script.rt4.*;
 import org.powerbot.script.rt4.ClientContext;
-import org.powerbot.script.rt4.Component;
-import org.powerbot.script.rt4.Item;
+
+import ChopnFletch.ChopnFletch;
+import ChopnFletch.Enums.LOG;
 
 public class Fletch extends Task<ClientContext> {
 	private int knifeId 		= 946;
@@ -43,6 +48,7 @@ public class Fletch extends Task<ClientContext> {
 	}
 	
 	public void cutArrowShaft() {
+		/*
 		Component arrowShaftComponent = ctx.widgets.widget(305).component(9);
 		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
@@ -83,10 +89,12 @@ public class Fletch extends Task<ClientContext> {
 				log.interact("use");
 			}		
 		}	
+		*/
 					
 	}
 	
 	public void makeHeadlessArrow() {
+		/*
 		Component makeHeadlessArrow = ctx.widgets.widget(582).component(5);
 		
 		while(true) {
@@ -115,9 +123,11 @@ public class Fletch extends Task<ClientContext> {
 			Condition.sleep(10000);
 			
 		}
+		*/
 	}
 	
 	public void fletchShortbow() {
+		/*
 		Component shortbowComponent = ctx.widgets.widget(304).component(8);
 		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
@@ -157,6 +167,7 @@ while(true) {
 				log.interact("use");
 			}		
 		}
+		*/
 	}
 	
 	public void fletchLongbow() {
@@ -177,21 +188,39 @@ while(true) {
 			if(longbowComponent.valid()) {
 				
 				if(ctx.menu.opened()) {
-					ctx.menu.click((command) -> command.toString().toLowerCase().startsWith("make x"));
-					
-					Condition.wait(() -> {
+
+					ctx.menu.click(new Filter<MenuCommand>() {
 						
-						if(makeXComponent.visible()) {
-							ctx.input.sendln("234");
-							Condition.sleep(500);
-							return true;
+						@Override
+						public boolean accept(MenuCommand command) {
+							return command.toString().toLowerCase().startsWith("make x");
 						}
-						return false;
-					},200, 50);
+					});
+					
+					Condition.wait(new Callable<Boolean>() {
+
+						@Override
+						public Boolean call() {
+							
+							if(makeXComponent.visible()) {
+								ctx.input.sendln("234");
+								Condition.sleep(500);
+								return true;
+							}
+							return false;
+						}
+					}, 200, 50);
+					
 
 				} else {
 					longbowComponent.click(false);
-					Condition.wait(() -> ctx.menu.opened(), 200, 5);
+					
+					Condition.wait(new Callable<Boolean>() {
+						@Override
+						public Boolean call() {
+							return ctx.menu.opened();
+						}
+					}, 50, 50);
 				}
 				
 			} else if(ctx.players.local().animation() == -1) {

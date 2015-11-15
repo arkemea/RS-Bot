@@ -1,7 +1,14 @@
-package ChopnFletch;
+package ChopnFletch.Tasks;
 
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.Item;
+
+
+
+
+import ChopnFletch.ChopnFletch;
+import ChopnFletch.Enums.BOW;
+import ChopnFletch.Enums.LOG;
 //TODO Rewrite this class, shit is hard to look at
 public class Drop extends Task<ClientContext> {
 	
