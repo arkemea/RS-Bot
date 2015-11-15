@@ -1,4 +1,4 @@
-package ChopnFletch;
+package ChopnFletch.Graphics;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import org.powerbot.script.rt4.ClientContext;
 
+import ChopnFletch.ChopnFletch;
 import ChopnFletch.Tasks.Task;
 
 

@@ -1,4 +1,4 @@
-package ChopnFletch;
+package ChopnFletch.Graphics;
 
 
 
@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.powerbot.script.rt4.ClientContext;
 
+import ChopnFletch.ChopnFletch;
 import ChopnFletch.Enums.BANK;
 import ChopnFletch.Enums.LOG;
 import ChopnFletch.Enums.TREE;
@@ -130,12 +131,13 @@ public class Gui extends JFrame {
 	  
 	  setResizable(false);
 	  setTitle("ChopnFletcher");
-	  setBounds(100,100,375,200);
+	  setBounds(200,200,310,120);
 	  
 	  contentPane = new JPanel();
 	  contentPane.setBorder(new EmptyBorder(5,5,5,5));
 	  setContentPane(contentPane);
 	  contentPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+	  
 	  contentPane.setLayout(new GridBagLayout());
 	  
 	  GridBagConstraints c = new GridBagConstraints();
