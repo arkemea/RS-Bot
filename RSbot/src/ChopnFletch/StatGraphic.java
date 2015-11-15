@@ -64,9 +64,9 @@ public class StatGraphic extends Task<ClientContext> {
 	public void inputGraphic(Graphics g) {
 		
 		try {
-			g.drawImage(ImageIO.read(getClass().getResource("/art/bg1.png")), 0, 0, null);
-			g.drawImage(ImageIO.read(getClass().getResource("/art/fletchingIcon.png")),170,380,null);
-			g.drawImage(ImageIO.read(getClass().getResource("/art/woodcuttingIcon.png")), 320, 380, null);
+			g.drawImage(ImageIO.read(getClass().getResource("/ChopnFletch/art/bg1.png")), 0, 0, null);
+			g.drawImage(ImageIO.read(getClass().getResource("/ChopnFletch/art/fletchingIcon.png")),170,380,null);
+			g.drawImage(ImageIO.read(getClass().getResource("/ChopnFletch/art/woodcuttingIcon.png")), 320, 380, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (java.lang.IllegalArgumentException IAe) {

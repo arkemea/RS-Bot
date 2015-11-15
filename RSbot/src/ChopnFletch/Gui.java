@@ -130,46 +130,74 @@ public class Gui extends JFrame {
 	  
 	  setResizable(false);
 	  setTitle("ChopnFletcher");
-	  setBounds(100,100,350,275);
+	  setBounds(100,100,375,200);
 	  
 	  contentPane = new JPanel();
 	  contentPane.setBorder(new EmptyBorder(5,5,5,5));
 	  setContentPane(contentPane);
-	  contentPane.setLayout(null);
+	  contentPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+	  contentPane.setLayout(new GridBagLayout());
+	  
+	  GridBagConstraints c = new GridBagConstraints();
+	  c.fill = GridBagConstraints.HORIZONTAL;
 	  
 	  JLabel bankLabel = new JLabel("Bank");
-	  bankLabel.setBounds(12,5,50,30);
-	  contentPane.add(bankLabel);
+	  c.fill = GridBagConstraints.HORIZONTAL;
+	  c.weightx = 0.5;
+	  c.gridx = 0;
+	  c.gridy = 0;
+	  contentPane.add(bankLabel, c);
 	  
 	  bankChoice = new JComboBox(bankChoices);
-	  bankChoice.setBounds(10, 30, 100, 30);
+	  c.fill = GridBagConstraints.HORIZONTAL;
+	  c.weightx = 0.5;
+	  c.gridx = 1;
+	  c.gridy = 0;
 	  bankChoice.setSelectedIndex(0);
-      contentPane.add(bankChoice);
+      contentPane.add(bankChoice, c);
       
       powercuttingChoice = new JRadioButton("Powercutting");
-      powercuttingChoice.setBounds(110, 35, 100, 20);
-      contentPane.add(powercuttingChoice);
+	  c.fill = GridBagConstraints.HORIZONTAL;
+	  c.weightx = 0.5;
+	  c.gridx = 2;
+	  c.gridy = 0;
+      contentPane.add(powercuttingChoice, c);
       
       JLabel treeLabel = new JLabel("Tree");
+	  c.fill = GridBagConstraints.HORIZONTAL;
+	  c.weightx = 0.5;
+	  c.gridx = 0;
+	  c.gridy = 1;
 	  treeLabel.setBounds(12,60,50,30);
-	  contentPane.add(treeLabel);
+	  contentPane.add(treeLabel, c);
 	  
 	  treeChoice = new JComboBox(treeChoices);
-	  treeChoice.setBounds(10, 85, 100, 30);
+	  c.fill = GridBagConstraints.HORIZONTAL;
+	  c.weightx = 0.5;
+	  c.gridx = 1;
+	  c.gridy = 1;
 	  treeChoice.setSelectedIndex(0);
-      contentPane.add(treeChoice);
+      contentPane.add(treeChoice, c);
   
 	  JLabel fletchLabel = new JLabel("Fletch");
-	  fletchLabel.setBounds(12, 115, 50, 30);
-	  contentPane.add(fletchLabel);
+	  c.fill = GridBagConstraints.HORIZONTAL;
+	  c.weightx = 0.5;
+	  c.gridx = 0;
+	  c.gridy = 2;
+	  contentPane.add(fletchLabel, c);
 	  
 	  fletchChoice = new JComboBox(fletchChoices);
-	  fletchChoice.setBounds(10, 140, 100, 30);
-	  contentPane.add(fletchChoice);
+	  c.fill = GridBagConstraints.HORIZONTAL;
+	  c.weightx = 0.5;
+	  c.gridx = 1;
+	  c.gridy = 2;
+	  contentPane.add(fletchChoice, c);
 	  
 	  startButton = new Button("Start bot");
-	  startButton.setBounds(10, 180, 70, 30);
-	  
+	  c.fill = GridBagConstraints.HORIZONTAL;
+	  c.weightx = 0.5;
+	  c.gridx = 2;
+	  c.gridy = 3;
 	  startButton.addActionListener(new ActionListener() {
 
 		@Override
@@ -178,7 +206,7 @@ public class Gui extends JFrame {
 		}
 	  });
 	  
-	  contentPane.add(startButton);
+	  contentPane.add(startButton, c);
 	   
    }  
 }

@@ -48,28 +48,35 @@ public class Fletch extends Task<ClientContext> {
 	}
 	
 	public void cutArrowShaft() {
-		/*
+		
 		Component arrowShaftComponent = ctx.widgets.widget(305).component(9);
 		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
-		while(true) {
+		Item knife 					= ctx.inventory.select().id(knifeId).poll();
+		Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+		
+		if (!log.valid()) {
+			return;
+		}
+		
+		ChopnFletch.status = "Fletching";
+		
+		if(arrowShaftComponent.valid()) {
 			
-			
-			Item knife 	= ctx.inventory.select().id(knifeId).poll();
-			Item log 	= ctx.inventory.select().id(logId).poll();
-			
-			if (!log.valid()) {
-				break;
-			}
-			
-			ChopnFletch.status = "Fletching";
-			
-			if(arrowShaftComponent.valid()) {
-				
-				if(ctx.menu.opened()) {
-					ctx.menu.click((command) -> command.toString().toLowerCase().startsWith("make x"));
+			if(ctx.menu.opened()) {
+
+				ctx.menu.click(new Filter<MenuCommand>() {
 					
-					Condition.wait(() -> {
+					@Override
+					public boolean accept(MenuCommand command) {
+						return command.toString().toLowerCase().startsWith("make x");
+					}
+				});
+				
+				Condition.wait(new Callable<Boolean>() {
+
+					@Override
+					public Boolean call() {
 						
 						if(makeXComponent.visible()) {
 							ctx.input.sendln("234");
@@ -77,24 +84,30 @@ public class Fletch extends Task<ClientContext> {
 							return true;
 						}
 						return false;
-					},200, 50);
-
-				} else {
-					arrowShaftComponent.click(false);
-					Condition.wait(() -> ctx.menu.opened(), 200, 5);
-				}
+					}
+				}, 200, 50);
 				
-			} else if(ctx.players.local().animation() == -1) {
-				knife.interact("Use");
-				log.interact("use");
-			}		
+
+			} else {
+				arrowShaftComponent.click(false);
+				
+				Condition.wait(new Callable<Boolean>() {
+					@Override
+					public Boolean call() {
+						return ctx.menu.opened();
+					}
+				}, 50, 50);
+			}
+			
+		} else if(ctx.players.local().animation() == -1) {
+			knife.interact("Use");
+			log.interact("use");
 		}	
-		*/
 					
 	}
 	
 	public void makeHeadlessArrow() {
-		/*
+		
 		Component makeHeadlessArrow = ctx.widgets.widget(582).component(5);
 		
 		while(true) {
@@ -123,31 +136,39 @@ public class Fletch extends Task<ClientContext> {
 			Condition.sleep(10000);
 			
 		}
-		*/
+		
 	}
 	
 	public void fletchShortbow() {
-		/*
+		
 		Component shortbowComponent = ctx.widgets.widget(304).component(8);
 		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
-while(true) {
+		Item knife 					= ctx.inventory.select().id(knifeId).poll();
+		Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+		
+		if (!log.valid()) {
+			return;
+		}
+		
+		ChopnFletch.status = "Fletching";
+		
+		if(shortbowComponent.valid()) {
 			
-			Item knife 					= ctx.inventory.select().id(knifeId).poll();
-			Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
-			
-			if (!log.valid()) {
-				break;
-			}
-			
-			ChopnFletch.status = "Fletching";
-			
-			if(shortbowComponent.valid()) {
-				
-				if(ctx.menu.opened()) {
-					ctx.menu.click((command) -> command.toString().toLowerCase().startsWith("make x"));
+			if(ctx.menu.opened()) {
+
+				ctx.menu.click(new Filter<MenuCommand>() {
 					
-					Condition.wait(() -> {
+					@Override
+					public boolean accept(MenuCommand command) {
+						return command.toString().toLowerCase().startsWith("make x");
+					}
+				});
+				
+				Condition.wait(new Callable<Boolean>() {
+
+					@Override
+					public Boolean call() {
 						
 						if(makeXComponent.visible()) {
 							ctx.input.sendln("234");
@@ -155,79 +176,85 @@ while(true) {
 							return true;
 						}
 						return false;
-					},200, 50);
-
-				} else {
-					shortbowComponent.click(false);
-					Condition.wait(() -> ctx.menu.opened(), 200, 5);
-				}
+					}
+				}, 200, 50);
 				
-			} else if(ctx.players.local().animation() == -1) {
-				knife.interact("Use");
-				log.interact("use");
-			}		
-		}
-		*/
+
+			} else {
+				shortbowComponent.click(false);
+				
+				Condition.wait(new Callable<Boolean>() {
+					@Override
+					public Boolean call() {
+						return ctx.menu.opened();
+					}
+				}, 50, 50);
+			}
+			
+		} else if(ctx.players.local().animation() == -1) {
+			knife.interact("Use");
+			log.interact("use");
+		}	
 	}
 	
 	public void fletchLongbow() {
 		Component longbowComponent 	= ctx.widgets.widget(304).component(10);
 		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
-		while(true) {
+		
+	
+		Item knife 					= ctx.inventory.select().id(knifeId).poll();
+		Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+		
+		if (!log.valid()) {
+			return;
+		}
+		
+		ChopnFletch.status = "Fletching";
+		
+		if(longbowComponent.valid()) {
 			
-			Item knife 					= ctx.inventory.select().id(knifeId).poll();
-			Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
-			
-			if (!log.valid()) {
-				break;
+			if(ctx.menu.opened()) {
+
+				ctx.menu.click(new Filter<MenuCommand>() {
+					
+					@Override
+					public boolean accept(MenuCommand command) {
+						return command.toString().toLowerCase().startsWith("make x");
+					}
+				});
+				
+				Condition.wait(new Callable<Boolean>() {
+
+					@Override
+					public Boolean call() {
+						
+						if(makeXComponent.visible()) {
+							ctx.input.sendln("234");
+							Condition.sleep(500);
+							return true;
+						}
+						return false;
+					}
+				}, 200, 50);
+				
+
+			} else {
+				longbowComponent.click(false);
+				
+				Condition.wait(new Callable<Boolean>() {
+					@Override
+					public Boolean call() {
+						return ctx.menu.opened();
+					}
+				}, 50, 50);
 			}
 			
-			ChopnFletch.status = "Fletching";
-			
-			if(longbowComponent.valid()) {
-				
-				if(ctx.menu.opened()) {
-
-					ctx.menu.click(new Filter<MenuCommand>() {
-						
-						@Override
-						public boolean accept(MenuCommand command) {
-							return command.toString().toLowerCase().startsWith("make x");
-						}
-					});
-					
-					Condition.wait(new Callable<Boolean>() {
-
-						@Override
-						public Boolean call() {
-							
-							if(makeXComponent.visible()) {
-								ctx.input.sendln("234");
-								Condition.sleep(500);
-								return true;
-							}
-							return false;
-						}
-					}, 200, 50);
-					
-
-				} else {
-					longbowComponent.click(false);
-					
-					Condition.wait(new Callable<Boolean>() {
-						@Override
-						public Boolean call() {
-							return ctx.menu.opened();
-						}
-					}, 50, 50);
-				}
-				
-			} else if(ctx.players.local().animation() == -1) {
-				knife.interact("Use");
-				log.interact("use");
-			}		
-		}
+		} else if(ctx.players.local().animation() == -1) {
+			knife.interact("Use");
+			log.interact("use");
+		}		
+	
 	}
 }
 

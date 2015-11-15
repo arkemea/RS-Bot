@@ -78,6 +78,12 @@ public class ChopnFletch extends PollingScript<ClientContext> implements Message
 		for(Task<?> task: taskList) {
 			if(task.activate()) {
 				task.execute();
+				
+				if(task instanceof Fletch) {
+					System.out.println("test");
+					break;
+				}
+				
 			}
 		}
 	}
