@@ -16,11 +16,15 @@ import org.powerbot.script.rt4.ClientContext;
 import ChopnFletch.Enums.BANK;
 import ChopnFletch.Enums.LOG;
 import ChopnFletch.Enums.TREE;
+import ChopnFletch.Graphics.Gui;
+import ChopnFletch.Graphics.StatGraphic;
 import ChopnFletch.Tasks.Banking;
 import ChopnFletch.Tasks.Chop;
 import ChopnFletch.Tasks.Drop;
 import ChopnFletch.Tasks.Fletch;
 import ChopnFletch.Tasks.Task;
+import ChopnFletch.Threads.AntiAFK;
+import ChopnFletch.Threads.LootSearcher;
 
 @Script.Manifest(name = "ArkChopnFletch", description = "Chops any log with fletching, banking and powercutting support")
 
@@ -47,17 +51,19 @@ public class ChopnFletch extends PollingScript<ClientContext> implements Message
 	@Override
 	public void start() {
 		
-		Gui settings = new Gui(ctx);
+		Gui settings 			= new Gui(ctx);
 		
-		Thread mLootSearcher = new Thread(new LootSearcher(2000,ctx));
+		Thread mLootSearcher 	= new Thread(new LootSearcher(2000,ctx));
+		Thread mAntiAFK 		= new Thread(new AntiAFK(ctx));
 		settings.setVisible(true);
 		
 		while(!startScript) {
 			Condition.sleep(100);
 		}
 		status = "Bot started";
+		
 		mLootSearcher.start();
-
+		mAntiAFK.start();
 		
 		if(powerCut && fletch == 0) {
 			boolean addAll = taskList.addAll(Arrays.asList(new Chop(ctx), new Drop(ctx)));

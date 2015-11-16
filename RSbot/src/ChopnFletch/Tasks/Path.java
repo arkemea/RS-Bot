@@ -1,4 +1,4 @@
-package ChopnFletch;
+package ChopnFletch.Tasks;
 
 import org.powerbot.script.Tile;
 

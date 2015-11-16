@@ -1,11 +1,13 @@
-package ChopnFletch;
+package ChopnFletch.Threads;
 
 import java.util.List;
+import java.util.Random;
 
 import org.powerbot.script.Condition;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GroundItem;
 
+import ChopnFletch.ChopnFletch;
 import ChopnFletch.Enums.NEST;
 
 
@@ -34,6 +36,7 @@ public class LootSearcher extends Thread implements Runnable {
 					}
 				}
 			}
+			
 			Condition.sleep(waitTime);
 		}
 		

@@ -47,6 +47,7 @@ public class Chop extends Task<ClientContext>{
 					
 					if(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()) > distancetoAnchor) {
 						ChopnFletch.status = "No trees";
+						System.out.println(mPF.distanceBetween(ChopnFletch.anchor,tree.tile()));
 						return false;
 					}
 					return true;
