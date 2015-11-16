@@ -1,6 +1,6 @@
 package ChopnFletch.Enums;
 
-public enum BOW {
+public enum Bow {
 	  OAKSHORT(54),
 	  OAKLONG(56),
 	  WILLOWSHORT(60),
@@ -14,7 +14,7 @@ public enum BOW {
   
   private int bowId;
   
-  BOW(int id) {
+  Bow(int id) {
     bowId = id;
   }
 

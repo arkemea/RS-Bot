@@ -1,6 +1,6 @@
 package ChopnFletch.Enums;
 
-public enum NEST {
+public enum Nest {
 	
 	EMPTYNEST(5075),
 	SEEDNEST(5073),
@@ -8,7 +8,7 @@ public enum NEST {
 	
 	private int id;
 	
-	NEST(int id) {
+	Nest(int id) {
 		this.id = id;
 	}
 	

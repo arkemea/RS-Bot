@@ -1,6 +1,6 @@
 package ChopnFletch.Enums;
 
-public enum TREE {
+public enum Tree {
 	NORMAL(1276,1278),
 	OAK(11756),
 	WILLOW(11755,11759,11763,11761),
@@ -10,7 +10,7 @@ public enum TREE {
 	
 	private int treeIds[];
 	
-	TREE(int... treeIds) {
+	Tree(int... treeIds) {
 		this.treeIds = treeIds;
 	}
 	

@@ -1,6 +1,6 @@
 package ChopnFletch.Enums;
 
-public enum LOG {
+public enum Log {
 	  NORMAL(1511),
 	  OAK(1521),
 	  WILLOW(1519),
@@ -10,7 +10,7 @@ public enum LOG {
   
   private int logId;
   
-  LOG(int id) {
+  Log(int id) {
     logId = id;
   }
 
