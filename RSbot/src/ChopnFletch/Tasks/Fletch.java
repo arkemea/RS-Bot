@@ -10,11 +10,11 @@ import ChopnFletch.ChopnFletch;
 import ChopnFletch.Enums.Log;
 
 public class Fletch extends Task<ClientContext> {
-	private int knifeId 		= 946;
-	private int featherId 		= 314;
-	private int arrowShaftId 	= 52;
+	private final int knifeId 		= 946;
+	private final int featherId 	= 314;
+	private final int arrowShaftId 	= 52;
 
-	private int logId, fletch;
+	private final int logId, fletch;
 	
 	public Fletch(ClientContext ctx, int fletch, int logId) {
 		super(ctx);
@@ -52,8 +52,8 @@ public class Fletch extends Task<ClientContext> {
 	
 	public void cutArrowShaft() {
 		
-		Component arrowShaftComponent = ctx.widgets.widget(305).component(9);
-		Component makeXComponent	= ctx.widgets.widget(162).component(33);
+		final Component arrowShaftComponent = ctx.widgets.widget(305).component(9);
+		final Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
 		Item knife 					= ctx.inventory.select().id(knifeId).poll();
 		Item log 					= ctx.inventory.select().id(logId).poll();
@@ -111,41 +111,41 @@ public class Fletch extends Task<ClientContext> {
 	
 	public void makeHeadlessArrow() {
 		
-		Component makeHeadlessArrow = ctx.widgets.widget(582).component(5);
+		final Component makeHeadlessArrow = ctx.widgets.widget(582).component(5);
 		
 		while(true) {
-			Item feather 	= ctx.inventory.select().id(featherId).poll();
-			Item arrowShaft = ctx.inventory.select().id(arrowShaftId).poll();
+			final Item feather 	= ctx.inventory.select().id(featherId).poll();
+			final Item arrowShaft = ctx.inventory.select().id(arrowShaftId).poll();
 			
 			if (!feather.valid() || !arrowShaft.valid()) {
 				break;
 			}
 
 			
-			Condition.wait(() -> {
-				
-				if(makeHeadlessArrow.valid()) {
-					makeHeadlessArrow.interact(false, "make 10 sets");
-					ChopnFletch.status = "Fletching";
-					return true;
-				} else {
-					feather.interact("Use");
-					arrowShaft.interact("use");
-				}
-				
+			Condition.wait(new Callable<Boolean>() {
+
+				@Override
+				public Boolean call() throws Exception {
+					if(makeHeadlessArrow.valid()) {
+						makeHeadlessArrow.interact(false, "make 10 sets");
+						ChopnFletch.status = "Fletching";
+						return true;
+					} else {
+						feather.interact("Use");
+						arrowShaft.interact("use");
+					}
 				return false;
+				}
 			}, 50, 50);
-			
 			Condition.sleep(10000);
-			
 		}
 		
 	}
 	
 	public void fletchShortbow() {
 		
-		Component shortbowComponent = ctx.widgets.widget(304).component(8);
-		Component makeXComponent	= ctx.widgets.widget(162).component(33);
+		final Component shortbowComponent = ctx.widgets.widget(304).component(8);
+		final Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
 		Item knife 					= ctx.inventory.select().id(knifeId).poll();
 		Item log 					= ctx.inventory.select().id(logId).poll();
@@ -201,13 +201,13 @@ public class Fletch extends Task<ClientContext> {
 	}
 	
 	public void fletchLongbow() {
-		Component longbowComponent 	= ctx.widgets.widget(304).component(10);
-		Component makeXComponent	= ctx.widgets.widget(162).component(33);
+		final Component longbowComponent 	= ctx.widgets.widget(304).component(10);
+		final Component makeXComponent		= ctx.widgets.widget(162).component(33);
 		
 		
 	
-		Item knife 					= ctx.inventory.select().id(knifeId).poll();
-		Item log 					= ctx.inventory.select().id(logId).poll();
+		Item knife 							= ctx.inventory.select().id(knifeId).poll();
+		Item log 							= ctx.inventory.select().id(logId).poll();
 		
 		if (!log.valid()) {
 			return;

@@ -63,7 +63,6 @@ public class Banking extends Task<ClientContext> {
 		}
 	} 
 	
-	
 	public void bankAllLogs() { 
 		for(Log l: Log.values()) {
 			ctx.bank.deposit(l.getLogId(), Bank.Amount.ALL);

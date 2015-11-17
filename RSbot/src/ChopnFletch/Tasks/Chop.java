@@ -35,7 +35,7 @@ public class Chop extends Task<ClientContext>{
 	public void execute() {
 		
 		GameObject tree 		= ctx.objects.select().id(treeToChop).nearest().poll();
-		PathFinder mPF			= new PathFinder(ctx);
+		final PathFinder mPF	= new PathFinder(ctx);
 		
 		if(mPF.distanceBetween(anchor, tree.tile()) > distanceToAnchor) {
 			mPF.moveTo(anchor);
@@ -54,7 +54,7 @@ public class Chop extends Task<ClientContext>{
 					return true;
 				}
 			}, 500, 10);
-			
+			 
 		} else if(!(ctx.players.local().animation() == -1)) {
 				ChopnFletch.status = "Chopping";
 				
