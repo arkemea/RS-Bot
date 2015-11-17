@@ -25,16 +25,14 @@ public class LootSearcher extends Task<ClientContext>{
 	public void execute() {
 		
 		ctx.groundItems.select(new Filter<GroundItem>() {
-
 			@Override
 			public boolean accept(GroundItem i) {
 				for(Nest n: Nest.values()) {
 					if(i.id() == n.getId()) {
 						i.click();
 					}
-				}
-				
-				return false;
+				}	
+				return true;
 			}
 		});
 	}
