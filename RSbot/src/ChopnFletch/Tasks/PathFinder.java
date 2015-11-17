@@ -77,7 +77,7 @@ public class PathFinder extends Task<ClientContext> {
 	}
 	
 	
-	public void moveTo(Tile targetTile) {
+	public void moveTo(final Tile targetTile) {
 		while(true) {
 					
 			if(!ctx.movement.running() && ctx.movement.energyLevel() > 80) {
@@ -107,7 +107,7 @@ public class PathFinder extends Task<ClientContext> {
 		}
 	}
 	
-	public void moveTo(Tile[] path) {
+	public void moveTo(final Tile[] path) {
 		
 		int closestTile = 0;
 		Tile highScore = new Tile(0,0);
