@@ -3,45 +3,48 @@ package ChopnFletch.Tasks;
 import java.util.concurrent.Callable;
 
 import org.powerbot.script.*;
-import org.powerbot.script.ClientAccessor;
 import org.powerbot.script.rt4.*;
 import org.powerbot.script.rt4.ClientContext;
 
 import ChopnFletch.ChopnFletch;
-import ChopnFletch.Enums.LOG;
+import ChopnFletch.Enums.Log;
 
 public class Fletch extends Task<ClientContext> {
 	private int knifeId 		= 946;
-	private int logId			= LOG.NORMAL.getLogId();
 	private int featherId 		= 314;
 	private int arrowShaftId 	= 52;
+
+	private int logId, fletch;
 	
-	public Fletch(ClientContext ctx) {
+	public Fletch(ClientContext ctx, int fletch, int logId) {
 		super(ctx);
+		this.logId 	= logId;
+		this.fletch = fletch;
+		
 	}
 	
 	@Override
 	public boolean activate() {
 		return		ctx.inventory.select().count() == 28
 				&& 	ctx.inventory.select().id(knifeId).poll().valid()
-				&&	ctx.inventory.select().id(ChopnFletch.logToCut).poll().valid();
+				&&	ctx.inventory.select().id(logId).poll().valid();
 		
 	}
 
 	@Override
 	public void execute() {
 
-		if(ChopnFletch.fletch == 1) {
-			if(ctx.inventory.select().id(LOG.NORMAL.getLogId()).poll().valid()) {
+		if(fletch == 1) {
+			if(ctx.inventory.select().id(Log.NORMAL.getLogId()).poll().valid()) {
 				cutArrowShaft();
 			}
 			
 			if(ctx.inventory.select().id(featherId).poll().valid() && ctx.inventory.select().id(arrowShaftId).poll().valid()) {
 				makeHeadlessArrow();
 			}
-		} else if(ChopnFletch.fletch == 2) {
+		} else if(fletch == 2) {
 			fletchShortbow();
-		} else if(ChopnFletch.fletch == 3) {
+		} else if(fletch == 3) {
 			fletchLongbow();
 		}
 		
@@ -53,7 +56,7 @@ public class Fletch extends Task<ClientContext> {
 		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
 		Item knife 					= ctx.inventory.select().id(knifeId).poll();
-		Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+		Item log 					= ctx.inventory.select().id(logId).poll();
 		
 		if (!log.valid()) {
 			return;
@@ -145,7 +148,7 @@ public class Fletch extends Task<ClientContext> {
 		Component makeXComponent	= ctx.widgets.widget(162).component(33);
 		
 		Item knife 					= ctx.inventory.select().id(knifeId).poll();
-		Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+		Item log 					= ctx.inventory.select().id(logId).poll();
 		
 		if (!log.valid()) {
 			return;
@@ -204,7 +207,7 @@ public class Fletch extends Task<ClientContext> {
 		
 	
 		Item knife 					= ctx.inventory.select().id(knifeId).poll();
-		Item log 					= ctx.inventory.select().id(ChopnFletch.logToCut).poll();
+		Item log 					= ctx.inventory.select().id(logId).poll();
 		
 		if (!log.valid()) {
 			return;

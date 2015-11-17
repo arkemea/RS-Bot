@@ -15,9 +15,8 @@ import javax.swing.border.EmptyBorder;
 import org.powerbot.script.rt4.ClientContext;
 
 import ChopnFletch.ChopnFletch;
-import ChopnFletch.Enums.BANK;
-import ChopnFletch.Enums.LOG;
-import ChopnFletch.Enums.TREE;
+import ChopnFletch.Enums.*;
+import ChopnFletch.Tasks.*;
 
 
  
@@ -38,88 +37,45 @@ public class Gui extends JFrame {
 		   
    public void onStart() {
 	   
-	   switch (treeChoice.getSelectedItem().toString()) {
-	   	case "Normal":
-	   		ChopnFletch.treeToChop 	= TREE.NORMAL.getTreeIds();
-			ChopnFletch.logToCut 	= LOG.NORMAL.getLogId();
-			ChopnFletch.pathToWalk	= 0;
-			break;
-	   	case "Oak":
-	   		ChopnFletch.treeToChop 	= TREE.OAK.getTreeIds();
-			ChopnFletch.logToCut 	= LOG.OAK.getLogId();
-			ChopnFletch.pathToWalk	= 1;
-			break;
-	   	case "Willow":
-	   		ChopnFletch.treeToChop 	= TREE.WILLOW.getTreeIds();
-			ChopnFletch.logToCut 	= LOG.WILLOW.getLogId();
-			ChopnFletch.pathToWalk	= 2;
-			break;
-	   	case "Maple":
-	   		ChopnFletch.treeToChop 	= TREE.MAPLE.getTreeIds();
-			ChopnFletch.logToCut 	= LOG.MAPLE.getLogId();
-			ChopnFletch.pathToWalk	= 3;
-			break;
-	   	case "Yew":
-	   		ChopnFletch.treeToChop 	= TREE.YEW.getTreeIds();
-	   		ChopnFletch.logToCut 	= LOG.YEW.getLogId();
-	   		ChopnFletch.pathToWalk	= 4;
-	   		break;
-	   	case "Magic":
-	   		ChopnFletch.treeToChop 	= TREE.MAGIC.getTreeIds();
-			ChopnFletch.logToCut 	= LOG.MAGIC.getLogId();
-			ChopnFletch.pathToWalk	= 5;
-			break;
-		default:
-			break;
-		}
-	   
-	   switch (fletchChoice.getSelectedItem().toString()) {
-		case "Dont Fletch":
-			ChopnFletch.fletch = 0;
-			break;
-		case "Arrows":
-			ChopnFletch.fletch = 1;
-			break;
-		case "Shortbows":
-			ChopnFletch.fletch = 2;
-			break;
-		case "Longbows":
-			ChopnFletch.fletch = 3;
-			break;
-		default:
-			break;
-		}
-	   
-	   switch (bankChoice.getSelectedItem().toString()) {
-	   
-		case "Draynor":
-			ChopnFletch.bankToBank 	= BANK.DRAYNOR;
-			ChopnFletch.anchor		= BANK.DRAYNOR.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
-			break;
-		case "Seers Village":
-			ChopnFletch.bankToBank 	= BANK.SEERSVILLAGE;
-			ChopnFletch.anchor		= BANK.SEERSVILLAGE.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
-			break;
-		case "The Grand Exchange":
-			ChopnFletch.bankToBank	= BANK.GRANDEXCHANGE;
-			ChopnFletch.anchor		= BANK.GRANDEXCHANGE.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
-			break;
-		case "Varrock East":
-			ChopnFletch.bankToBank	= BANK.VARROCKEAST;
-			ChopnFletch.anchor		= BANK.VARROCKEAST.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
-		case "Catherby":
-			ChopnFletch.bankToBank	= BANK.CATHERBY;
-			ChopnFletch.anchor		= BANK.CATHERBY.getSPOTS().getSpecificAnchor(treeChoice.getSelectedIndex());
-		default:
-			break;
-		}
-	   
+	   if(fletchChoice.getSelectedIndex() != 0) {
+		   for(Log l: Log.values()) {
+			   if(l.getName().equals(treeChoice.getSelectedItem())) {
+				   ChopnFletch.taskList.add(new Fletch(ctx,fletchChoice.getSelectedIndex(), l.getLogId()));
+			   }
+		   }
+	   }
 	   if(powercuttingChoice.isSelected()) {
-		   ChopnFletch.anchor = ctx.players.local().tile();
+		   ChopnFletch.taskList.add(new Drop(ctx));
+		   
+		   for(Tree t: Tree.values()) {
+			   if(t.getName().equals(treeChoice.getSelectedItem())) {
+				   ChopnFletch.taskList.add(new Chop(ctx, t.getTreeIds(), ctx.players.local().tile(), 30));
+			   }
+		   }
+	   } else {
+		   
+		   for(Banks b: Banks.values()) {
+			   if(b.getName().equals(bankChoice.getSelectedItem())) {
+				   ChopnFletch.taskList.add(new PathFinder(ctx, true, b, treeChoice.getSelectedIndex()));
+				   ChopnFletch.taskList.add(new PathFinder(ctx, false, b, treeChoice.getSelectedIndex()));
+				   ChopnFletch.taskList.add(new Banking(ctx,b));
+				   for(Tree t: Tree.values()) {
+					   if(t.getName().equals(treeChoice.getSelectedItem())) {
+						   ChopnFletch.taskList.add(new Chop(ctx, t.getTreeIds(), b.getSpots().getSpecificAnchor(treeChoice.getSelectedIndex()),
+								   					b.getSpots().getSpecificPath(treeChoice.getSelectedIndex()).getDistanceToAnchor()));
+					   }
+				   }
+			   }
+		   }
 	   }
 	   
-	   ChopnFletch.powerCut = powercuttingChoice.isSelected();
-	   ChopnFletch.startScript = true;
+	   ChopnFletch.taskList.add(new LootSearcher(ctx));
+	   
+	   
+	   
+	   
+	   
+
 	   
 	   dispose();
    }

@@ -7,21 +7,51 @@ import org.powerbot.script.Condition;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt4.ClientContext;
 
-public class PathFinder extends Task<ClientContext> {
+import ChopnFletch.Enums.Banks;
+import ChopnFletch.Enums.Spots;
 
+public class PathFinder extends Task<ClientContext> {
+	
+	private boolean direction; //true is from bank to spot, and false is from spot to bank.
+	private Banks bankToBank;
+	private Spots placeToBe;
+	private int pathToWalk;
+	private int distanceToAnchor;
+	
 	public PathFinder(ClientContext ctx) {
 		super(ctx);
+	}
+	
+	public PathFinder(ClientContext ctx, boolean direction, Banks bankToBank, int pathToWalk) {
+		super(ctx);
+		this.direction = direction;
+		this.bankToBank = bankToBank;
+		this.placeToBe = bankToBank.getSpots();
+		this.pathToWalk = pathToWalk;
+		distanceToAnchor = bankToBank.getSpots().getSpecificPath(pathToWalk).getDistanceToAnchor();
 	}
 
 	@Override
 	public boolean activate() {
 		
-		return true;
+		if(direction) {
+			return playerDistanceTo(placeToBe.getSpecificAnchor(pathToWalk)) > distanceToAnchor
+					&& ctx.inventory.select().count() < 28;
+		} else {
+			return !bankToBank.getBankArea().contains(ctx.players.local().tile())
+					&& ctx.inventory.select().count() == 28;
+		}
+
 	}
 
 	@Override
 	public void execute() {
 		
+		if(direction) {
+			moveTo(placeToBe.getSpecificPath(pathToWalk).getTilePath());
+		} else {
+			moveTo(placeToBe.getSpecificPath(pathToWalk).getReverseTilePath());
+		}
 		
 	}
 	

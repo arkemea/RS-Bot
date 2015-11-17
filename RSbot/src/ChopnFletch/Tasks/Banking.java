@@ -8,32 +8,35 @@ import org.powerbot.script.rt4.Bank;
 import org.powerbot.script.rt4.ClientContext;
 import org.powerbot.script.rt4.GameObject;
 
-import ArkMotherload.MineArea;
 import ChopnFletch.ChopnFletch;
-import ChopnFletch.Enums.BOW;
-import ChopnFletch.Enums.LOG;
-import ChopnFletch.Enums.NEST;
+import ChopnFletch.Enums.Banks;
+import ChopnFletch.Enums.Bow;
+import ChopnFletch.Enums.Log;
+import ChopnFletch.Enums.Nest;
 
 public class Banking extends Task<ClientContext> {
-
-	public Banking(ClientContext ctx) {
+	
+	Banks bankToBank;
+	
+	public Banking(ClientContext ctx, Banks bankToBank) {
 		super(ctx);
+		this.bankToBank = bankToBank;
 	}
 
 	@Override
 	public boolean activate() {
-		return 		ctx.inventory.select().count() == 28;
+		return 		ctx.inventory.select().count() == 28
+					&& bankToBank.getBankArea().contains(ctx.players.local().tile());
 	}
 
 	@Override
 	public void execute() {
 		
 		ChopnFletch.status = "Banking";
+
+		GameObject bankBooth 	= ctx.objects.select().id(bankToBank.getBankBoothId()).nearest().peek();
 		
-		PathFinder mPF 			= new PathFinder(ctx);
-		GameObject bankBooth 	= ctx.objects.select().id(ChopnFletch.bankToBank.getBankBoothId()).nearest().peek();
-		
-		if(ChopnFletch.bankToBank.getBankArea().contains(ctx.players.local().tile())) {
+		if(bankToBank.getBankArea().contains(ctx.players.local().tile())) {
 			
 			if(bankBooth.inViewport() && !ctx.players.local().inMotion()) {
 				bankBooth.click();	
@@ -54,42 +57,28 @@ public class Banking extends Task<ClientContext> {
 				
 			} else {
 				ctx.camera.turnTo(bankBooth);
+				ctx.movement.step(bankBooth);
 			}
 			
-			
-		} else {
-			
-			if(bankBooth.inViewport()) {
-				if(!ctx.players.local().inMotion()) {
-					ctx.movement.step(bankBooth);
-				}
-				
-			} else if(mPF.playerDistanceTo(bankBooth.tile()) > 20) {
-				mPF.moveTo(ChopnFletch.bankToBank.getSPOTS().getSpecificPath(ChopnFletch.pathToWalk).getReverseTilePath());
-				
-			} else {
-				ctx.camera.turnTo(bankBooth);
-				mPF.moveTo(ChopnFletch.bankToBank.getBankArea().getRandomTile());
-			}
 		}
-	}
+	} 
 	
 	
 	public void bankAllLogs() { 
-		for(LOG l: LOG.values()) {
+		for(Log l: Log.values()) {
 			ctx.bank.deposit(l.getLogId(), Bank.Amount.ALL);
 		}
 	}	
 		
 	
 	public void bankAllBows() {
-		for(BOW b: BOW.values()) {
+		for(Bow b: Bow.values()) {
 			ctx.bank.deposit(b.getBowId(), Bank.Amount.ALL);
 		}
 	}
 	
 	public void bankAllNests() {
-		for(NEST n: NEST.values()) {
+		for(Nest n: Nest.values()) {
 			ctx.bank.deposit(n.getId(), Bank.Amount.ALL);
 		}
 	}

@@ -6,11 +6,15 @@ import org.powerbot.script.rt4.Item;
 
 
 
+
+
 import ChopnFletch.ChopnFletch;
-import ChopnFletch.Enums.BOW;
-import ChopnFletch.Enums.LOG;
-//TODO Rewrite this class, shit is hard to look at
+import ChopnFletch.Enums.Bow;
+import ChopnFletch.Enums.Log;
+
 public class Drop extends Task<ClientContext> {
+	
+	private boolean powerCut;
 	
 	public Drop(ClientContext ctx) {
 		super(ctx);
@@ -26,32 +30,15 @@ public class Drop extends Task<ClientContext> {
 		
 		ChopnFletch.status = "Dropping";
 		
-		if(ChopnFletch.powerCut && ChopnFletch.fletch != 0) {
-			dropBows();
-			dropWrongLogs();
-		} else if(ChopnFletch.powerCut) {
-			dropAllLogs();
-		} else if(!ChopnFletch.powerCut) {
-			dropWrongLogs();
-		}
+		dropAllLogs();
+		dropAllBows();
 	}
 	
-	public void dropLogs() {
-		
-		if(ChopnFletch.powerCut && ChopnFletch.fletch == 0) {
-			dropAllLogs();
-		} else if(ChopnFletch.powerCut && ChopnFletch.fletch != 0) {
-			dropWrongLogs();
-			dropBows();
-		} else {
-			dropWrongLogs();
-		}
-	}
 	
 	public void dropAllLogs() {
 		
 		for(Item i: ctx.inventory.select()) {
-			for(LOG l: LOG.values()) {
+			for(Log l: Log.values()) {
 				if(i.id() == l.getLogId()) {
 					i.interact("Drop");
 				}
@@ -59,21 +46,10 @@ public class Drop extends Task<ClientContext> {
 		}
 	}
 	
-	public void dropWrongLogs() {
-		
+	public void dropAllBows() {
 		for(Item i: ctx.inventory.select()) {
-			for(LOG l: LOG.values()) {
-				if(i.id() == l.getLogId() && l.getLogId() != ChopnFletch.logToCut) {
-					i.interact("Drop");
-				}
-			}
-		}
-	}
-	
-	public void dropBows() {
-		for(Item i: ctx.inventory.select()) {
-			for(BOW l: BOW.values()) {
-				if(i.id() == l.getBowId()) {
+			for(Bow b: Bow.values()) {
+				if(i.id() == b.getBowId()) {
 					i.interact("Drop");
 				}
 			}

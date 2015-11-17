@@ -8,7 +8,7 @@ public enum Bow {
 	  MAPLESHORT(64),
 	  MAPLELONG(62),
 	  YEWSHORT(68),
-	  YEWLONG(70),
+	  YEWLONG(66),
 	  MAGICSHORT(72),
 	  MAGICLONG(74);
   

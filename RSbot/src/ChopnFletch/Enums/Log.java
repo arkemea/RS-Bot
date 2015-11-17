@@ -1,21 +1,26 @@
 package ChopnFletch.Enums;
 
 public enum Log {
-	  NORMAL(1511),
-	  OAK(1521),
-	  WILLOW(1519),
-	  MAPLE(1517),
-	  YEW(1515),
-	  MAGIC(1513);
+	  NORMAL("Normal",1511),
+	  OAK("Oak",1521),
+	  WILLOW("Willow",1519),
+	  MAPLE("Maple",1517),
+	  YEW("Yew",1515),
+	  MAGIC("Magic",1513);
   
   private int logId;
+  private String name;
   
-  Log(int id) {
+  Log(String name,int id) {
     logId = id;
+    this.name = name;
   }
 
   public int getLogId() {
     return logId;
+  }
+  public String getName() {
+	  return name;
   }
 }
 

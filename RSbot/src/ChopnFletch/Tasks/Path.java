@@ -6,18 +6,10 @@ import org.powerbot.script.Tile;
 public class Path {
 	
 	private Tile[] tilePath;
-	private int distanceToAnchor, distanceFromAnchor;
+	private int distanceToAnchor;
 
-	
-	public Path( int distanceFromAnchor, int distancetoAnchor, Tile tilePath) {
-		this.tilePath 			= new Tile[] {tilePath};
-		this.distanceFromAnchor = distanceFromAnchor;
-		this.distanceToAnchor	= distancetoAnchor;
-	}
-	
-	public Path(int distanceFromAnchor, int distancetoAnchor, Tile... tilePath) {
+	public Path(int distancetoAnchor, Tile... tilePath) {
 		this.tilePath = tilePath;
-		this.distanceFromAnchor = distanceFromAnchor;
 		this.distanceToAnchor	= distancetoAnchor;
 	}
 	
@@ -33,16 +25,8 @@ public class Path {
 		this.distanceToAnchor = distanceToAnchor;
 	}
 	
-	public void setDistanceFromAnchor(int distanceFromAnchor) {
-		this.distanceFromAnchor = distanceFromAnchor;
-	}
-	
 	public Tile[] getTilePath() {
 		return tilePath;
-	}
-	
-	public int getDistanceFromAnchor() {
-		return distanceFromAnchor;
 	}
 	
 	public int getDistanceToAnchor() {
